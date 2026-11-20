@@ -3,15 +3,37 @@
  *
  * Keyed by case rather than tool name because the inventory lists Invicti twice
  * (entries 1 and 10); a name-keyed map would silently drop one of them.
+ *
+ * @typedef {{name: string, case: string}} Tool
+ *
+ * @typedef {Object} Control
+ * @property {string} tool
+ * @property {string} case
+ * @property {boolean} licenceGated
+ * @property {string[]} detect
+ * @property {string[]} harden
+ * @property {string[]} mitre
+ * @property {string} note
+ *
+ * @typedef {Object} ControlsStats
+ * @property {number} tools
+ * @property {number} controls
+ * @property {number} signals
+ * @property {number} techniques
+ * @property {number} gated
  */
 
 /**
- * @param {Array<{name: string, case: string}>} tools
- * @param {Array<{tool: string, case: string, licenceGated: boolean, detect: string[], harden: string[], mitre: string[], note: string}>} controls
+ * @param {Tool[]} tools
+ * @param {Control[]} controls
+ * @returns {{errors: string[], stats: ControlsStats}}
  */
 export function checkControls(tools, controls) {
+  /** @type {string[]} */
   const errors = [];
+  /** @type {Map<string, Tool>} */
   const toolByCase = new Map(tools.map((tool) => [tool.case, tool]));
+  /** @type {Map<string, Control>} */
   const controlByCase = new Map();
 
   for (const control of controls) {
@@ -28,20 +50,24 @@ export function checkControls(tools, controls) {
     }
     controlByCase.set(control.case, control);
 
-    if (!toolByCase.has(control.case)) {
+    const tool = toolByCase.get(control.case);
+    if (!tool) {
       errors.push(`${control.tool}: case ${control.case} is not in redteam/tools.json`);
       continue;
     }
-
-    const tool = toolByCase.get(control.case);
     if (control.tool !== tool.name) {
       errors.push(`${control.case}: control names ${control.tool}, inventory says ${tool.name}`);
     }
     if (typeof control.licenceGated !== 'boolean') {
       errors.push(`${control.tool}: licenceGated must be a boolean`);
     }
+    // Fields arrive as JSON, so they are read through a loose view and checked
+    // before use; the typed shape above only describes what a valid entry looks like.
+    /** @type {Record<string, unknown>} */
+    const loose = control;
     for (const field of ['detect', 'harden', 'mitre']) {
-      if (!Array.isArray(control[field]) || control[field].length === 0) {
+      const value = loose[field];
+      if (!Array.isArray(value) || value.length === 0) {
         errors.push(`${control.tool}: "${field}" must be a non-empty array`);
       }
     }
