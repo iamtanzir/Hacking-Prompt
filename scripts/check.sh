@@ -17,6 +17,9 @@ node redteam/validate.mjs --strict
 echo "== coverage gate =="
 node redteam/coverage.mjs
 
+echo "== blue-team gate =="
+node blue/check.mjs
+
 echo "== score bundled samples =="
 node redteam/score.mjs redteam/results.example.jsonl
 

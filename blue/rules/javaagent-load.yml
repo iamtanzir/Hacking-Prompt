@@ -1,0 +1,51 @@
+title: Unapproved Java Agent Loaded Into a JVM
+id: 5b1d7f52-3f4e-4a6e-9c0a-jagent-0001
+status: experimental
+description: >
+  Detects a Java process starting with -javaagent or -agentlib pointing at a JAR
+  outside the approved agent directory. Licence patchers commonly use this to
+  rewrite validation at runtime; so do some legitimate APM and profiler agents,
+  which is why the approved paths are excluded.
+references:
+  - https://attack.mitre.org/techniques/T1574/
+author: Hacking-Prompt blue team
+date: 2026/11/20
+logsource:
+  category: process_creation
+  product: windows
+detection:
+  selection:
+    Image|endswith: '\java.exe'
+    CommandLine|contains:
+      - '-javaagent:'
+      - '-agentlib:'
+  filter_approved:
+    CommandLine|contains:
+      - '\Program Files\ApprovedAgents\'
+      - '\ProgramData\APM\agents\'
+  condition: selection and not filter_approved
+fields:
+  - Image
+  - CommandLine
+  - ParentImage
+  - User
+falsepositives:
+  - Developer laptops running profilers or coverage agents
+  - CI runners that attach build agents
+level: medium
+tags:
+  - attack.defense_evasion
+  - attack.t1574
+
+# Extend this to the other platforms you run:
+#   linux  -> logsource: {category: process_creation, product: linux},
+#             Image|endswith: '/java', same CommandLine terms
+#   macos  -> product: macos, Image|endswith: '/java'
+#
+# Tuning notes
+# - Start in log-only mode for two weeks and collect the real agent paths before
+#   blocking; a noisy rule gets disabled, which is worse than no rule.
+# - Pair it with a file-integrity rule on the patched application's JAR so a
+#   static patch is caught even when no agent is involved.
+# - This rule is an example, not a drop-in: your approved list and log schema
+#   decide whether it works.
