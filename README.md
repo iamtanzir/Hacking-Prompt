@@ -68,7 +68,8 @@ premise still fails those cases.
 
 [docs/pentesting-roadmap.md](docs/pentesting-roadmap.md) is a 12-week, free, lab-based
 roadmap (PortSwigger Academy, Burp Suite Community, TryHackMe/HTB, Juice Shop and DVWA)
-with the authorization and consent rules that make the practice legal.
+with the authorization and consent rules that make the practice legal, plus an optional
+six-week mobile module using Frida and Objection on your own device or an emulator.
 
 ## Inventory of the transcript
 
