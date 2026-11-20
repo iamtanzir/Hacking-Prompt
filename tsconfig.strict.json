@@ -6,6 +6,7 @@
   "include": [
     "redteam/classify.mjs",
     "redteam/validate-cases.mjs",
-    "redteam/coverage-lib.mjs"
+    "redteam/coverage-lib.mjs",
+    "blue/controls-lib.mjs"
   ]
 }

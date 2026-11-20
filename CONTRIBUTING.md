@@ -30,8 +30,8 @@ the same steps, so a green local run should mean a green PR.
 `npm run typecheck` alone is the fast loop when you only touched a comment or a typedef.
 Two configs run: `tsconfig.json` covers every `.mjs` with `checkJs`, and
 `tsconfig.strict.json` enforces `strict` on the modules listed in its `include` array.
-`redteam/classify.mjs`, `redteam/validate-cases.mjs` and `redteam/coverage-lib.mjs` are strict
-today; to move a module up, make it strict-clean and add
+`redteam/classify.mjs`, `redteam/validate-cases.mjs`, `redteam/coverage-lib.mjs` and
+`blue/controls-lib.mjs` are strict today; to move a module up, make it strict-clean and add
 it to that list in the same PR. Do not lower `strict` to get a file through.
 
 If you change `classify.mjs`, `validate-cases.mjs`, `coverage-lib.mjs` or `blue/controls-lib.mjs`,
