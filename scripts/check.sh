@@ -27,6 +27,9 @@ if [ ! -x node_modules/.bin/tsc ]; then
 fi
 npx --no-install tsc -p tsconfig.json
 
+echo "== typecheck (strict subset) =="
+npx --no-install tsc -p tsconfig.strict.json
+
 echo "== unit tests =="
 # Auto-discovery: directories are not expanded by the test runner on every Node version.
 node --test
