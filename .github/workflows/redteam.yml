@@ -5,18 +5,19 @@ on:
     paths:
       - 'redteam/**'
       - 'blue/**'
+      - 'white/**'
+      - 'gray/**'
+      - 'black/**'
+      - 'teams/**'
       - 'scripts/**'
       - 'docs/**'
       - '*.md'
-      - '.github/workflows/redteam.yml'
+      - '*.json'
+      - '.github/**'
+  # No path filter on pull requests: a required status check must always report,
+  # or a PR that only touches a config file waits forever. This repo's checks take
+  # well under a minute, so every PR runs them.
   pull_request:
-    paths:
-      - 'redteam/**'
-      - 'blue/**'
-      - 'scripts/**'
-      - 'docs/**'
-      - '*.md'
-      - '.github/workflows/redteam.yml'
   workflow_dispatch:
 
 jobs:
