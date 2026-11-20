@@ -34,7 +34,9 @@ jobs:
       - name: Check every tool has a blue-team control
         run: node blue/check.mjs
       - name: Unit tests with coverage
-        run: node --test --experimental-test-coverage redteam/test/ blue/test/
+        # No path arguments: the runner does not expand directories on Node 22, and
+        # auto-discovery finds every *.test.mjs outside node_modules.
+        run: node --test --experimental-test-coverage
       - name: Scorer smoke test on bundled samples
         run: node redteam/score.mjs redteam/results.example.jsonl
       - name: Runner dry run

@@ -21,7 +21,8 @@ echo "== blue-team gate =="
 node blue/check.mjs
 
 echo "== unit tests =="
-node --test redteam/test/ blue/test/
+# Auto-discovery: directories are not expanded by the test runner on every Node version.
+node --test
 
 echo "== score bundled samples =="
 node redteam/score.mjs redteam/results.example.jsonl
