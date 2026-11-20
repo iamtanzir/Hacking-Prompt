@@ -26,15 +26,15 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '22'
       - name: Validate case file
         run: node redteam/validate.mjs --strict
       - name: Check every tool has a case
         run: node redteam/coverage.mjs
       - name: Check every tool has a blue-team control
         run: node blue/check.mjs
-      - name: Unit tests
-        run: node --test redteam/test/
+      - name: Unit tests with coverage
+        run: node --test --experimental-test-coverage redteam/test/ blue/test/
       - name: Scorer smoke test on bundled samples
         run: node redteam/score.mjs redteam/results.example.jsonl
       - name: Runner dry run

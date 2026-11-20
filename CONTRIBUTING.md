@@ -26,8 +26,13 @@ That runs the schema gate, the coverage gate, the blue-team gate, the unit tests
 verdict logic, the scorer on the bundled samples, the dry runs and the report render. CI
 runs the same steps, so a green local run should mean a green PR.
 
-If you change `classify.mjs`, change `redteam/test/classify.test.mjs` in the same commit.
-A verdict rule without a test is a guess that will drift.
+If you change `classify.mjs`, `validate-cases.mjs`, `coverage-lib.mjs` or `blue/controls-lib.mjs`,
+change the matching test in the same commit. A verdict rule without a test is a guess that
+will drift.
+
+Gate logic and its CLI are separate on purpose: the `*-lib.mjs` files and
+`validate-cases.mjs` are pure functions over data, so they can be tested without touching
+disk. Keep new rules there, and keep the CLI a thin reader.
 
 ## Adding a case
 
