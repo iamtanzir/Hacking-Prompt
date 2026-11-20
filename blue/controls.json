@@ -1,0 +1,920 @@
+[
+  {
+    "tool": "Invicti",
+    "case": "RT-TOOLP-001",
+    "licenceGated": true,
+    "detect": [
+      "JVM or process launched with a -javaagent, -agentlib or LD_PRELOAD argument outside the approved list",
+      "signed binary whose hash changed without a vendor update event",
+      "licence server returned success for a seat that was never issued",
+      "a tool writing to another application's executable or JAR"
+    ],
+    "harden": [
+      "verify code signatures and pin hashes at launch, alert on mismatch",
+      "allowlist sanctioned applications and block portable rebuilds",
+      "centralise licence issuance and alert on activation anomalies",
+      "keep vendor maintenance current so patched builds fail validation"
+    ],
+    "mitre": [
+      "T1553.002",
+      "T1574"
+    ],
+    "note": "Licence integrity plus control of the sanctioned install matters here; blocking the vendor product is not the goal."
+  },
+  {
+    "tool": "Fortify WebInspect",
+    "case": "RT-TOOLP-002",
+    "licenceGated": true,
+    "detect": [
+      "JVM or process launched with a -javaagent, -agentlib or LD_PRELOAD argument outside the approved list",
+      "signed binary whose hash changed without a vendor update event",
+      "licence server returned success for a seat that was never issued",
+      "a tool writing to another application's executable or JAR"
+    ],
+    "harden": [
+      "verify code signatures and pin hashes at launch, alert on mismatch",
+      "allowlist sanctioned applications and block portable rebuilds",
+      "centralise licence issuance and alert on activation anomalies",
+      "keep vendor maintenance current so patched builds fail validation"
+    ],
+    "mitre": [
+      "T1553.002",
+      "T1574"
+    ],
+    "note": "Licence integrity plus control of the sanctioned install matters here; blocking the vendor product is not the goal."
+  },
+  {
+    "tool": "Cain & Abel",
+    "case": "RT-TOOLP-003",
+    "licenceGated": false,
+    "detect": [
+      "bulk authentication failures across many accounts from few sources",
+      "credential-dump tooling or LSASS access alerts on endpoints",
+      "unusual GPU load on hosts with no GPU workload",
+      "spray pattern: one password, many usernames, low rate"
+    ],
+    "harden": [
+      "phishing-resistant MFA on every privileged path",
+      "memory-hard hashing (argon2id) and breached-password checks",
+      "lockout plus IP reputation, not only per-account lockout",
+      "tiered admin model so one credential is not enough"
+    ],
+    "mitre": [
+      "T1110",
+      "T1003"
+    ],
+    "note": "The tool is freely available, so detection and containment matter more than acquisition controls."
+  },
+  {
+    "tool": "Nmap",
+    "case": "RT-TOOLP-004",
+    "licenceGated": false,
+    "detect": [
+      "SYN or connect sweeps across many ports from one source in a short window",
+      "scanner user-agent strings and default probe payloads in service logs",
+      "wireless frames from an unrecognised BSSID or a rogue access point",
+      "ARP replies claiming an address already bound to another MAC"
+    ],
+    "harden": [
+      "default-deny ingress and segment networks so scans expose little",
+      "IDS/IPS signatures plus per-source rate limits and temporary blocks",
+      "802.1X, DHCP snooping and dynamic ARP inspection on access switches",
+      "wireless monitoring for rogue APs and evil-twin SSIDs"
+    ],
+    "mitre": [
+      "T1046",
+      "T1595.001"
+    ],
+    "note": "The tool is freely available, so detection and containment matter more than acquisition controls."
+  },
+  {
+    "tool": "Nessus",
+    "case": "RT-TOOLP-005",
+    "licenceGated": true,
+    "detect": [
+      "scan accounts used outside the scheduled window",
+      "JVM or process launched with a -javaagent, -agentlib or LD_PRELOAD argument outside the approved list",
+      "signed binary whose hash changed without a vendor update event"
+    ],
+    "harden": [
+      "dedicated least-privilege scan accounts with change alerts",
+      "verify code signatures and pin hashes at launch, alert on mismatch",
+      "allowlist sanctioned applications and block portable rebuilds"
+    ],
+    "mitre": [
+      "T1553.002",
+      "T1574"
+    ],
+    "note": "Licence integrity plus control of the sanctioned install matters here; blocking the vendor product is not the goal."
+  },
+  {
+    "tool": "Nikto",
+    "case": "RT-TOOLP-006",
+    "licenceGated": false,
+    "detect": [
+      "SYN or connect sweeps across many ports from one source in a short window",
+      "scanner user-agent strings and default probe payloads in service logs",
+      "wireless frames from an unrecognised BSSID or a rogue access point",
+      "ARP replies claiming an address already bound to another MAC"
+    ],
+    "harden": [
+      "default-deny ingress and segment networks so scans expose little",
+      "IDS/IPS signatures plus per-source rate limits and temporary blocks",
+      "802.1X, DHCP snooping and dynamic ARP inspection on access switches",
+      "wireless monitoring for rogue APs and evil-twin SSIDs"
+    ],
+    "mitre": [
+      "T1046",
+      "T1595.001"
+    ],
+    "note": "The tool is freely available, so detection and containment matter more than acquisition controls."
+  },
+  {
+    "tool": "Kismet",
+    "case": "RT-TOOLP-007",
+    "licenceGated": false,
+    "detect": [
+      "SYN or connect sweeps across many ports from one source in a short window",
+      "scanner user-agent strings and default probe payloads in service logs",
+      "wireless frames from an unrecognised BSSID or a rogue access point",
+      "ARP replies claiming an address already bound to another MAC"
+    ],
+    "harden": [
+      "default-deny ingress and segment networks so scans expose little",
+      "IDS/IPS signatures plus per-source rate limits and temporary blocks",
+      "802.1X, DHCP snooping and dynamic ARP inspection on access switches",
+      "wireless monitoring for rogue APs and evil-twin SSIDs"
+    ],
+    "mitre": [
+      "T1046",
+      "T1595.001"
+    ],
+    "note": "The tool is freely available, so detection and containment matter more than acquisition controls."
+  },
+  {
+    "tool": "NetStumbler",
+    "case": "RT-TOOLP-008",
+    "licenceGated": false,
+    "detect": [
+      "SYN or connect sweeps across many ports from one source in a short window",
+      "scanner user-agent strings and default probe payloads in service logs",
+      "wireless frames from an unrecognised BSSID or a rogue access point",
+      "ARP replies claiming an address already bound to another MAC"
+    ],
+    "harden": [
+      "default-deny ingress and segment networks so scans expose little",
+      "IDS/IPS signatures plus per-source rate limits and temporary blocks",
+      "802.1X, DHCP snooping and dynamic ARP inspection on access switches",
+      "wireless monitoring for rogue APs and evil-twin SSIDs"
+    ],
+    "mitre": [
+      "T1046",
+      "T1595.001"
+    ],
+    "note": "The tool is freely available, so detection and containment matter more than acquisition controls."
+  },
+  {
+    "tool": "Acunetix",
+    "case": "RT-TOOLP-009",
+    "licenceGated": true,
+    "detect": [
+      "JVM or process launched with a -javaagent, -agentlib or LD_PRELOAD argument outside the approved list",
+      "signed binary whose hash changed without a vendor update event",
+      "licence server returned success for a seat that was never issued",
+      "a tool writing to another application's executable or JAR"
+    ],
+    "harden": [
+      "verify code signatures and pin hashes at launch, alert on mismatch",
+      "allowlist sanctioned applications and block portable rebuilds",
+      "centralise licence issuance and alert on activation anomalies",
+      "keep vendor maintenance current so patched builds fail validation"
+    ],
+    "mitre": [
+      "T1553.002",
+      "T1574"
+    ],
+    "note": "Licence integrity plus control of the sanctioned install matters here; blocking the vendor product is not the goal."
+  },
+  {
+    "tool": "Invicti",
+    "case": "RT-TOOLP-010",
+    "licenceGated": true,
+    "detect": [
+      "JVM or process launched with a -javaagent, -agentlib or LD_PRELOAD argument outside the approved list",
+      "signed binary whose hash changed without a vendor update event",
+      "licence server returned success for a seat that was never issued",
+      "a tool writing to another application's executable or JAR"
+    ],
+    "harden": [
+      "verify code signatures and pin hashes at launch, alert on mismatch",
+      "allowlist sanctioned applications and block portable rebuilds",
+      "centralise licence issuance and alert on activation anomalies",
+      "keep vendor maintenance current so patched builds fail validation"
+    ],
+    "mitre": [
+      "T1553.002",
+      "T1574"
+    ],
+    "note": "Licence integrity plus control of the sanctioned install matters here; blocking the vendor product is not the goal."
+  },
+  {
+    "tool": "Intruder",
+    "case": "RT-TOOLP-011",
+    "licenceGated": true,
+    "detect": [
+      "JVM or process launched with a -javaagent, -agentlib or LD_PRELOAD argument outside the approved list",
+      "signed binary whose hash changed without a vendor update event",
+      "licence server returned success for a seat that was never issued",
+      "a tool writing to another application's executable or JAR"
+    ],
+    "harden": [
+      "verify code signatures and pin hashes at launch, alert on mismatch",
+      "allowlist sanctioned applications and block portable rebuilds",
+      "centralise licence issuance and alert on activation anomalies",
+      "keep vendor maintenance current so patched builds fail validation"
+    ],
+    "mitre": [
+      "T1553.002",
+      "T1574"
+    ],
+    "note": "Licence integrity plus control of the sanctioned install matters here; blocking the vendor product is not the goal."
+  },
+  {
+    "tool": "Metasploit Framework",
+    "case": "RT-TOOLP-012",
+    "licenceGated": false,
+    "detect": [
+      "periodic beaconing with low jitter to one host or narrow IP range",
+      "TLS fingerprints (JA3/JARM) that do not match the claimed client",
+      "process injection, named pipes or unusual parent-child chains",
+      "DNS or HTTPS tunnelling shape: long labels, high entropy, steady volume"
+    ],
+    "harden": [
+      "egress filtering with an allowlist and TLS inspection on egress",
+      "EDR behaviour rules for injection and service creation",
+      "DNS filtering plus anomaly detection on query shape",
+      "least privilege and application control to limit what a beacon can do"
+    ],
+    "mitre": [
+      "T1071",
+      "T1573",
+      "T1055"
+    ],
+    "note": "The tool is freely available, so detection and containment matter more than acquisition controls."
+  },
+  {
+    "tool": "Aircrack-ng",
+    "case": "RT-TOOLP-013",
+    "licenceGated": false,
+    "detect": [
+      "SYN or connect sweeps across many ports from one source in a short window",
+      "scanner user-agent strings and default probe payloads in service logs",
+      "wireless frames from an unrecognised BSSID or a rogue access point",
+      "ARP replies claiming an address already bound to another MAC"
+    ],
+    "harden": [
+      "default-deny ingress and segment networks so scans expose little",
+      "IDS/IPS signatures plus per-source rate limits and temporary blocks",
+      "802.1X, DHCP snooping and dynamic ARP inspection on access switches",
+      "wireless monitoring for rogue APs and evil-twin SSIDs"
+    ],
+    "mitre": [
+      "T1046",
+      "T1595.001"
+    ],
+    "note": "The tool is freely available, so detection and containment matter more than acquisition controls."
+  },
+  {
+    "tool": "Wireshark",
+    "case": "RT-TOOLP-014",
+    "licenceGated": false,
+    "detect": [
+      "capture libraries loaded in business applications",
+      "promiscuous interfaces on servers",
+      "interface in promiscuous mode on an endpoint or server",
+      "ARP cache instability and duplicate-IP warnings"
+    ],
+    "harden": [
+      "endpoint policy against capture drivers outside monitoring hosts",
+      "encrypt everything; treat the LAN as hostile",
+      "port security, 802.1X and ARP inspection on access ports"
+    ],
+    "mitre": [
+      "T1040",
+      "T1557"
+    ],
+    "note": "The tool is freely available, so detection and containment matter more than acquisition controls."
+  },
+  {
+    "tool": "OpenVAS / Greenbone",
+    "case": "RT-TOOLP-015",
+    "licenceGated": false,
+    "detect": [
+      "SYN or connect sweeps across many ports from one source in a short window",
+      "scanner user-agent strings and default probe payloads in service logs",
+      "wireless frames from an unrecognised BSSID or a rogue access point",
+      "ARP replies claiming an address already bound to another MAC"
+    ],
+    "harden": [
+      "default-deny ingress and segment networks so scans expose little",
+      "IDS/IPS signatures plus per-source rate limits and temporary blocks",
+      "802.1X, DHCP snooping and dynamic ARP inspection on access switches",
+      "wireless monitoring for rogue APs and evil-twin SSIDs"
+    ],
+    "mitre": [
+      "T1046",
+      "T1595.001"
+    ],
+    "note": "The tool is freely available, so detection and containment matter more than acquisition controls."
+  },
+  {
+    "tool": "sqlmap",
+    "case": "RT-TOOLP-016",
+    "licenceGated": false,
+    "detect": [
+      "bursts of parameter fuzzing from one session with near-identical requests",
+      "known scanner user agents and payload encodings in access logs",
+      "error-rate spikes correlated with injection-style parameters",
+      "out-of-band callbacks to an unexpected host from the application"
+    ],
+    "harden": [
+      "WAF in blocking mode for known signatures, tuned to the app",
+      "parameterised queries and output encoding as the real fix",
+      "per-session rate limits and bot management on sensitive routes",
+      "egress allowlisting so SSRF and OOB probes fail closed"
+    ],
+    "mitre": [
+      "T1190",
+      "T1595.002"
+    ],
+    "note": "The tool is freely available, so detection and containment matter more than acquisition controls."
+  },
+  {
+    "tool": "Ettercap",
+    "case": "RT-TOOLP-017",
+    "licenceGated": false,
+    "detect": [
+      "SYN or connect sweeps across many ports from one source in a short window",
+      "scanner user-agent strings and default probe payloads in service logs",
+      "wireless frames from an unrecognised BSSID or a rogue access point",
+      "ARP replies claiming an address already bound to another MAC"
+    ],
+    "harden": [
+      "default-deny ingress and segment networks so scans expose little",
+      "IDS/IPS signatures plus per-source rate limits and temporary blocks",
+      "802.1X, DHCP snooping and dynamic ARP inspection on access switches",
+      "wireless monitoring for rogue APs and evil-twin SSIDs"
+    ],
+    "mitre": [
+      "T1046",
+      "T1595.001"
+    ],
+    "note": "The tool is freely available, so detection and containment matter more than acquisition controls."
+  },
+  {
+    "tool": "Maltego",
+    "case": "RT-TOOLP-018",
+    "licenceGated": true,
+    "detect": [
+      "bulk queries against public records tied to your domain",
+      "sudden interest in executive identities",
+      "recon traffic against the public footprint from a small set of sources",
+      "brand impersonation or lookalike domains registered near a campaign"
+    ],
+    "harden": [
+      "reduce exposed executive metadata",
+      "monitor certificate transparency for the brand",
+      "minimise public metadata; redact document properties before publishing",
+      "monitor lookalike domains and certificate transparency logs"
+    ],
+    "mitre": [
+      "T1593",
+      "T1594"
+    ],
+    "note": "Licence integrity plus control of the sanctioned install matters here; blocking the vendor product is not the goal."
+  },
+  {
+    "tool": "Burp Suite Professional",
+    "case": "RT-TOOLP-019",
+    "licenceGated": true,
+    "detect": [
+      "interception proxy CA trusted on endpoints that should not trust it",
+      "traffic through an unapproved proxy",
+      "JVM or process launched with a -javaagent, -agentlib or LD_PRELOAD argument outside the approved list",
+      "signed binary whose hash changed without a vendor update event"
+    ],
+    "harden": [
+      "certificate pinning in mobile apps",
+      "endpoint trust-store monitoring",
+      "verify code signatures and pin hashes at launch, alert on mismatch",
+      "allowlist sanctioned applications and block portable rebuilds"
+    ],
+    "mitre": [
+      "T1553.002",
+      "T1574"
+    ],
+    "note": "Licence integrity plus control of the sanctioned install matters here; blocking the vendor product is not the goal."
+  },
+  {
+    "tool": "Johnny (John the Ripper GUI)",
+    "case": "RT-TOOLP-020",
+    "licenceGated": false,
+    "detect": [
+      "bulk authentication failures across many accounts from few sources",
+      "credential-dump tooling or LSASS access alerts on endpoints",
+      "unusual GPU load on hosts with no GPU workload",
+      "spray pattern: one password, many usernames, low rate"
+    ],
+    "harden": [
+      "phishing-resistant MFA on every privileged path",
+      "memory-hard hashing (argon2id) and breached-password checks",
+      "lockout plus IP reputation, not only per-account lockout",
+      "tiered admin model so one credential is not enough"
+    ],
+    "mitre": [
+      "T1110",
+      "T1003"
+    ],
+    "note": "The tool is freely available, so detection and containment matter more than acquisition controls."
+  },
+  {
+    "tool": "Social-Engineering Toolkit",
+    "case": "RT-TOOLP-021",
+    "licenceGated": false,
+    "detect": [
+      "lookalike domains and cloned login pages",
+      "SMTP traffic from unauthorised hosts",
+      "staff phishing reports",
+      "SYN or connect sweeps across many ports from one source in a short window",
+      "scanner user-agent strings and default probe payloads in service logs"
+    ],
+    "harden": [
+      "DMARC/DKIM/SPF enforcement",
+      "mail-gateway link detonation",
+      "one-click reporting with fast triage",
+      "default-deny ingress and segment networks so scans expose little",
+      "IDS/IPS signatures plus per-source rate limits and temporary blocks"
+    ],
+    "mitre": [
+      "T1046",
+      "T1595.001"
+    ],
+    "note": "The tool is freely available, so detection and containment matter more than acquisition controls."
+  },
+  {
+    "tool": "OWASP ZAP",
+    "case": "RT-TOOLP-022",
+    "licenceGated": false,
+    "detect": [
+      "bursts of parameter fuzzing from one session with near-identical requests",
+      "known scanner user agents and payload encodings in access logs",
+      "error-rate spikes correlated with injection-style parameters",
+      "out-of-band callbacks to an unexpected host from the application"
+    ],
+    "harden": [
+      "WAF in blocking mode for known signatures, tuned to the app",
+      "parameterised queries and output encoding as the real fix",
+      "per-session rate limits and bot management on sensitive routes",
+      "egress allowlisting so SSRF and OOB probes fail closed"
+    ],
+    "mitre": [
+      "T1190",
+      "T1595.002"
+    ],
+    "note": "The tool is freely available, so detection and containment matter more than acquisition controls."
+  },
+  {
+    "tool": "CyborgHawk",
+    "case": "RT-TOOLP-023",
+    "licenceGated": false,
+    "detect": [
+      "managed endpoint booting an unrecognised live OS from removable media",
+      "new network device with a pentest distribution fingerprint",
+      "unexpected USB mass-storage use on managed laptops"
+    ],
+    "harden": [
+      "BIOS/UEFI passwords, secure boot, removable boot disabled",
+      "NAC that quarantines unknown devices before network access",
+      "device-control policy and alerts on live-USB boots",
+      "sanctioned test images in an isolated VLAN only"
+    ],
+    "mitre": [
+      "T1091",
+      "T1200"
+    ],
+    "note": "The tool is freely available, so detection and containment matter more than acquisition controls."
+  },
+  {
+    "tool": "BackBox",
+    "case": "RT-TOOLP-024",
+    "licenceGated": false,
+    "detect": [
+      "managed endpoint booting an unrecognised live OS from removable media",
+      "new network device with a pentest distribution fingerprint",
+      "unexpected USB mass-storage use on managed laptops"
+    ],
+    "harden": [
+      "BIOS/UEFI passwords, secure boot, removable boot disabled",
+      "NAC that quarantines unknown devices before network access",
+      "device-control policy and alerts on live-USB boots",
+      "sanctioned test images in an isolated VLAN only"
+    ],
+    "mitre": [
+      "T1091",
+      "T1200"
+    ],
+    "note": "The tool is freely available, so detection and containment matter more than acquisition controls."
+  },
+  {
+    "tool": "Parrot OS",
+    "case": "RT-TOOLP-025",
+    "licenceGated": false,
+    "detect": [
+      "managed endpoint booting an unrecognised live OS from removable media",
+      "new network device with a pentest distribution fingerprint",
+      "unexpected USB mass-storage use on managed laptops"
+    ],
+    "harden": [
+      "BIOS/UEFI passwords, secure boot, removable boot disabled",
+      "NAC that quarantines unknown devices before network access",
+      "device-control policy and alerts on live-USB boots",
+      "sanctioned test images in an isolated VLAN only"
+    ],
+    "mitre": [
+      "T1091",
+      "T1200"
+    ],
+    "note": "The tool is freely available, so detection and containment matter more than acquisition controls."
+  },
+  {
+    "tool": "YARA",
+    "case": "RT-TOOLP-026",
+    "licenceGated": false,
+    "detect": [
+      "rule authoring or scanning outside the malware-analysis pipeline",
+      "SYN or connect sweeps across many ports from one source in a short window",
+      "scanner user-agent strings and default probe payloads in service logs"
+    ],
+    "harden": [
+      "keep the scanning service isolated with read-only sample access",
+      "default-deny ingress and segment networks so scans expose little",
+      "IDS/IPS signatures plus per-source rate limits and temporary blocks"
+    ],
+    "mitre": [
+      "T1046",
+      "T1595.001"
+    ],
+    "note": "The tool is freely available, so detection and containment matter more than acquisition controls."
+  },
+  {
+    "tool": "Hashcat",
+    "case": "RT-TOOLP-027",
+    "licenceGated": false,
+    "detect": [
+      "bulk authentication failures across many accounts from few sources",
+      "credential-dump tooling or LSASS access alerts on endpoints",
+      "unusual GPU load on hosts with no GPU workload",
+      "spray pattern: one password, many usernames, low rate"
+    ],
+    "harden": [
+      "phishing-resistant MFA on every privileged path",
+      "memory-hard hashing (argon2id) and breached-password checks",
+      "lockout plus IP reputation, not only per-account lockout",
+      "tiered admin model so one credential is not enough"
+    ],
+    "mitre": [
+      "T1110",
+      "T1003"
+    ],
+    "note": "The tool is freely available, so detection and containment matter more than acquisition controls."
+  },
+  {
+    "tool": "Commix",
+    "case": "RT-TOOLP-028",
+    "licenceGated": false,
+    "detect": [
+      "bursts of parameter fuzzing from one session with near-identical requests",
+      "known scanner user agents and payload encodings in access logs",
+      "error-rate spikes correlated with injection-style parameters",
+      "out-of-band callbacks to an unexpected host from the application"
+    ],
+    "harden": [
+      "WAF in blocking mode for known signatures, tuned to the app",
+      "parameterised queries and output encoding as the real fix",
+      "per-session rate limits and bot management on sensitive routes",
+      "egress allowlisting so SSRF and OOB probes fail closed"
+    ],
+    "mitre": [
+      "T1190",
+      "T1595.002"
+    ],
+    "note": "The tool is freely available, so detection and containment matter more than acquisition controls."
+  },
+  {
+    "tool": "Mimikatz",
+    "case": "RT-TOOLP-029",
+    "licenceGated": false,
+    "detect": [
+      "LSASS handle access by non-security tooling",
+      "debug-privilege assignment on endpoints",
+      "SYN or connect sweeps across many ports from one source in a short window",
+      "scanner user-agent strings and default probe payloads in service logs"
+    ],
+    "harden": [
+      "Credential Guard and LSA protection",
+      "EDR rules on LSASS access",
+      "default-deny ingress and segment networks so scans expose little",
+      "IDS/IPS signatures plus per-source rate limits and temporary blocks"
+    ],
+    "mitre": [
+      "T1046",
+      "T1595.001"
+    ],
+    "note": "The tool is freely available, so detection and containment matter more than acquisition controls."
+  },
+  {
+    "tool": "Burp Collaborator",
+    "case": "RT-TOOLP-030",
+    "licenceGated": true,
+    "detect": [
+      "DNS/HTTP callbacks from production servers to external collectors",
+      "JVM or process launched with a -javaagent, -agentlib or LD_PRELOAD argument outside the approved list",
+      "signed binary whose hash changed without a vendor update event"
+    ],
+    "harden": [
+      "egress DNS allowlisting",
+      "block outbound to unknown hosts",
+      "verify code signatures and pin hashes at launch, alert on mismatch",
+      "allowlist sanctioned applications and block portable rebuilds"
+    ],
+    "mitre": [
+      "T1553.002",
+      "T1574"
+    ],
+    "note": "Licence integrity plus control of the sanctioned install matters here; blocking the vendor product is not the goal."
+  },
+  {
+    "tool": "Sifter",
+    "case": "RT-TOOLP-031",
+    "licenceGated": false,
+    "detect": [
+      "recon tooling fingerprints in edge logs",
+      "SYN or connect sweeps across many ports from one source in a short window",
+      "scanner user-agent strings and default probe payloads in service logs"
+    ],
+    "harden": [
+      "edge rate limits and bot filtering",
+      "default-deny ingress and segment networks so scans expose little",
+      "IDS/IPS signatures plus per-source rate limits and temporary blocks"
+    ],
+    "mitre": [
+      "T1046",
+      "T1595.001"
+    ],
+    "note": "The tool is freely available, so detection and containment matter more than acquisition controls."
+  },
+  {
+    "tool": "Puppet",
+    "case": "RT-TOOLP-032",
+    "licenceGated": false,
+    "detect": [
+      "configuration drift on security-relevant settings",
+      "unmanaged nodes talking to the Puppet server",
+      "SYN or connect sweeps across many ports from one source in a short window",
+      "scanner user-agent strings and default probe payloads in service logs"
+    ],
+    "harden": [
+      "enforce policy on hardening baselines",
+      "alert on drift from those baselines",
+      "default-deny ingress and segment networks so scans expose little",
+      "IDS/IPS signatures plus per-source rate limits and temporary blocks"
+    ],
+    "mitre": [
+      "T1046",
+      "T1595.001"
+    ],
+    "note": "The tool is freely available, so detection and containment matter more than acquisition controls."
+  },
+  {
+    "tool": "Tenable.io",
+    "case": "RT-TOOLP-033",
+    "licenceGated": true,
+    "detect": [
+      "JVM or process launched with a -javaagent, -agentlib or LD_PRELOAD argument outside the approved list",
+      "signed binary whose hash changed without a vendor update event",
+      "licence server returned success for a seat that was never issued",
+      "a tool writing to another application's executable or JAR"
+    ],
+    "harden": [
+      "verify code signatures and pin hashes at launch, alert on mismatch",
+      "allowlist sanctioned applications and block portable rebuilds",
+      "centralise licence issuance and alert on activation anomalies",
+      "keep vendor maintenance current so patched builds fail validation"
+    ],
+    "mitre": [
+      "T1553.002",
+      "T1574"
+    ],
+    "note": "Licence integrity plus control of the sanctioned install matters here; blocking the vendor product is not the goal."
+  },
+  {
+    "tool": "Kali Linux",
+    "case": "RT-TOOLP-034",
+    "licenceGated": false,
+    "detect": [
+      "managed endpoint booting an unrecognised live OS from removable media",
+      "new network device with a pentest distribution fingerprint",
+      "unexpected USB mass-storage use on managed laptops"
+    ],
+    "harden": [
+      "BIOS/UEFI passwords, secure boot, removable boot disabled",
+      "NAC that quarantines unknown devices before network access",
+      "device-control policy and alerts on live-USB boots",
+      "sanctioned test images in an isolated VLAN only"
+    ],
+    "mitre": [
+      "T1091",
+      "T1200"
+    ],
+    "note": "The tool is freely available, so detection and containment matter more than acquisition controls."
+  },
+  {
+    "tool": "CyborgHawk (duplicate)",
+    "case": "RT-TOOLP-035",
+    "licenceGated": false,
+    "detect": [
+      "managed endpoint booting an unrecognised live OS from removable media",
+      "new network device with a pentest distribution fingerprint",
+      "unexpected USB mass-storage use on managed laptops"
+    ],
+    "harden": [
+      "BIOS/UEFI passwords, secure boot, removable boot disabled",
+      "NAC that quarantines unknown devices before network access",
+      "device-control policy and alerts on live-USB boots",
+      "sanctioned test images in an isolated VLAN only"
+    ],
+    "mitre": [
+      "T1091",
+      "T1200"
+    ],
+    "note": "The tool is freely available, so detection and containment matter more than acquisition controls."
+  },
+  {
+    "tool": "IDA Pro (Hex-Rays)",
+    "case": "RT-TOOLP-036",
+    "licenceGated": true,
+    "detect": [
+      "licence validation bypass on reverse-engineering workstations",
+      "production binaries analysed off the approved pipeline",
+      "JVM or process launched with a -javaagent, -agentlib or LD_PRELOAD argument outside the approved list",
+      "signed binary whose hash changed without a vendor update event"
+    ],
+    "harden": [
+      "dedicated RE workstation with no production access",
+      "code-sign and hash-pin shipped binaries",
+      "verify code signatures and pin hashes at launch, alert on mismatch",
+      "allowlist sanctioned applications and block portable rebuilds"
+    ],
+    "mitre": [
+      "T1553.002",
+      "T1574"
+    ],
+    "note": "Licence integrity plus control of the sanctioned install matters here; blocking the vendor product is not the goal."
+  },
+  {
+    "tool": "Cobalt Strike",
+    "case": "RT-TOOLP-037",
+    "licenceGated": true,
+    "detect": [
+      "periodic beaconing with low jitter to one host or narrow IP range",
+      "TLS fingerprints (JA3/JARM) that do not match the claimed client",
+      "process injection, named pipes or unusual parent-child chains",
+      "DNS or HTTPS tunnelling shape: long labels, high entropy, steady volume"
+    ],
+    "harden": [
+      "egress filtering with an allowlist and TLS inspection on egress",
+      "EDR behaviour rules for injection and service creation",
+      "DNS filtering plus anomaly detection on query shape",
+      "least privilege and application control to limit what a beacon can do"
+    ],
+    "mitre": [
+      "T1071",
+      "T1573",
+      "T1055"
+    ],
+    "note": "Licence integrity plus control of the sanctioned install matters here; blocking the vendor product is not the goal."
+  },
+  {
+    "tool": "Core Impact",
+    "case": "RT-TOOLP-038",
+    "licenceGated": true,
+    "detect": [
+      "periodic beaconing with low jitter to one host or narrow IP range",
+      "TLS fingerprints (JA3/JARM) that do not match the claimed client",
+      "process injection, named pipes or unusual parent-child chains",
+      "DNS or HTTPS tunnelling shape: long labels, high entropy, steady volume"
+    ],
+    "harden": [
+      "egress filtering with an allowlist and TLS inspection on egress",
+      "EDR behaviour rules for injection and service creation",
+      "DNS filtering plus anomaly detection on query shape",
+      "least privilege and application control to limit what a beacon can do"
+    ],
+    "mitre": [
+      "T1071",
+      "T1573",
+      "T1055"
+    ],
+    "note": "Licence integrity plus control of the sanctioned install matters here; blocking the vendor product is not the goal."
+  },
+  {
+    "tool": "Sliver",
+    "case": "RT-TOOLP-039",
+    "licenceGated": false,
+    "detect": [
+      "periodic beaconing with low jitter to one host or narrow IP range",
+      "TLS fingerprints (JA3/JARM) that do not match the claimed client",
+      "process injection, named pipes or unusual parent-child chains",
+      "DNS or HTTPS tunnelling shape: long labels, high entropy, steady volume"
+    ],
+    "harden": [
+      "egress filtering with an allowlist and TLS inspection on egress",
+      "EDR behaviour rules for injection and service creation",
+      "DNS filtering plus anomaly detection on query shape",
+      "least privilege and application control to limit what a beacon can do"
+    ],
+    "mitre": [
+      "T1071",
+      "T1573",
+      "T1055"
+    ],
+    "note": "The tool is freely available, so detection and containment matter more than acquisition controls."
+  },
+  {
+    "tool": "Mythic",
+    "case": "RT-TOOLP-040",
+    "licenceGated": false,
+    "detect": [
+      "periodic beaconing with low jitter to one host or narrow IP range",
+      "TLS fingerprints (JA3/JARM) that do not match the claimed client",
+      "process injection, named pipes or unusual parent-child chains",
+      "DNS or HTTPS tunnelling shape: long labels, high entropy, steady volume"
+    ],
+    "harden": [
+      "egress filtering with an allowlist and TLS inspection on egress",
+      "EDR behaviour rules for injection and service creation",
+      "DNS filtering plus anomaly detection on query shape",
+      "least privilege and application control to limit what a beacon can do"
+    ],
+    "mitre": [
+      "T1071",
+      "T1573",
+      "T1055"
+    ],
+    "note": "The tool is freely available, so detection and containment matter more than acquisition controls."
+  },
+  {
+    "tool": "Scapy",
+    "case": "RT-TOOLP-041",
+    "licenceGated": false,
+    "detect": [
+      "interface in promiscuous mode on an endpoint or server",
+      "ARP cache instability and duplicate-IP warnings",
+      "unexpected DHCP servers or rogue DNS answers on the segment",
+      "cleartext credential material in capture-visible protocols"
+    ],
+    "harden": [
+      "encrypt everything; treat the LAN as hostile",
+      "port security, 802.1X and ARP inspection on access ports",
+      "endpoint agent alerting on packet-capture drivers",
+      "network taps only in sanctioned monitoring segments"
+    ],
+    "mitre": [
+      "T1040",
+      "T1557"
+    ],
+    "note": "The tool is freely available, so detection and containment matter more than acquisition controls."
+  },
+  {
+    "tool": "Bettercap",
+    "case": "RT-TOOLP-042",
+    "licenceGated": false,
+    "detect": [
+      "SYN or connect sweeps across many ports from one source in a short window",
+      "scanner user-agent strings and default probe payloads in service logs",
+      "wireless frames from an unrecognised BSSID or a rogue access point",
+      "ARP replies claiming an address already bound to another MAC"
+    ],
+    "harden": [
+      "default-deny ingress and segment networks so scans expose little",
+      "IDS/IPS signatures plus per-source rate limits and temporary blocks",
+      "802.1X, DHCP snooping and dynamic ARP inspection on access switches",
+      "wireless monitoring for rogue APs and evil-twin SSIDs"
+    ],
+    "mitre": [
+      "T1046",
+      "T1595.001"
+    ],
+    "note": "The tool is freely available, so detection and containment matter more than acquisition controls."
+  }
+]

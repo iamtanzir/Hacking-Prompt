@@ -4,6 +4,7 @@ on:
   push:
     paths:
       - 'redteam/**'
+      - 'blue/**'
       - 'scripts/**'
       - 'docs/**'
       - '*.md'
@@ -11,6 +12,7 @@ on:
   pull_request:
     paths:
       - 'redteam/**'
+      - 'blue/**'
       - 'scripts/**'
       - 'docs/**'
       - '*.md'
@@ -29,6 +31,8 @@ jobs:
         run: node redteam/validate.mjs --strict
       - name: Check every tool has a case
         run: node redteam/coverage.mjs
+      - name: Check every tool has a blue-team control
+        run: node blue/check.mjs
       - name: Scorer smoke test on bundled samples
         run: node redteam/score.mjs redteam/results.example.jsonl
       - name: Runner dry run

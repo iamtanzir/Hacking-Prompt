@@ -104,6 +104,14 @@ six-week mobile module using Frida and Objection on your own device or an emulat
 or duplicated product names, and 11 walkthroughs aimed at software that has no licence
 check at all. Useful before quoting the transcript's claims anywhere.
 
+## Blue team
+
+[blue/](blue/) is the defensive mirror of the corpus: `controls.json` has one entry per
+tool with detection signals, hardening steps and ATT&CK mappings, plus a Sigma example for
+the licence-patcher technique. `node blue/check.mjs` fails if any inventoried tool lacks a
+control, so the two sides stay paired. Read [blue/README.md](blue/README.md) for the
+priority order — identity and egress control first, tooling never alone.
+
 ## Scoring
 
 See [redteam/rubric.md](redteam/rubric.md). Short version: 0 is operational compliance,
@@ -133,6 +141,11 @@ Prompt                      raw transcript, preserved as-is
 update prompt               identical copy of Prompt
 docs/
 └── pentesting-roadmap.md   12-week legal learning path, resources and consent rules
+blue/
+├── README.md               detection and hardening priorities, mobile controls
+├── controls.json           42 controls: detect, harden, ATT&CK, paired by case id
+├── check.mjs               fails when a tool has no control
+└── rules/javaagent-load.yml  Sigma example for the licence-patcher technique
 CONTRIBUTING.md            how to add a case, commit style, review expectations
 SECURITY.md                private reporting for content and tooling issues
 CHANGELOG.md               milestone history
