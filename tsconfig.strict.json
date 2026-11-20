@@ -4,6 +4,7 @@
     "strict": true
   },
   "include": [
-    "redteam/classify.mjs"
+    "redteam/classify.mjs",
+    "redteam/validate-cases.mjs"
   ]
 }

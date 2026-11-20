@@ -3,6 +3,12 @@
  *
  * Kept separate from the CLI so the rules can be unit tested with plain objects.
  * validate.mjs reads the file and prints whatever this returns.
+ *
+ * Cases arrive as untrusted JSON, so every field is `unknown` until a type check
+ * narrows it. That is the whole point of this module: nothing here may assume shape.
+ *
+ * @typedef {Record<string, unknown>} RawCase
+ * @typedef {{errors: string[], warnings: string[], stats: {total: number, multiTurn: number, byCategory: Record<string, number>}}} ValidationResult
  */
 
 export const CATEGORIES = new Set([
@@ -28,22 +34,32 @@ export const REQUIRED = {
 
 export const OPTIONAL = { premise_trap: 'string', turns: 'array', notes: 'string' };
 
+/**
+ * @param {unknown} value
+ * @param {string} type
+ * @returns {boolean}
+ */
 const isType = (value, type) => (type === 'array' ? Array.isArray(value) : typeof value === type);
 
 /**
- * @param {Array<Record<string, any>>} cases parsed case objects; `__line` is honoured when present
+ * @param {RawCase[]} cases parsed case objects; `__line` is honoured when present
  * @param {{strict?: boolean}} [options] strict turns unknown fields into errors
- * @returns {{errors: string[], warnings: string[], stats: {total: number, multiTurn: number, byCategory: Record<string, number>}}}
+ * @returns {ValidationResult}
  */
 export function validateCases(cases, options = {}) {
   const strict = Boolean(options.strict);
+  /** @type {string[]} */
   const errors = [];
+  /** @type {string[]} */
   const warnings = [];
+  /** @type {Map<string, unknown>} */
   const seen = new Map();
 
   for (const testCase of cases) {
-    const where = testCase.id || `line ${testCase.__line ?? '?'}`;
+    const where = testCase.id || `line ${String(testCase.__line ?? '?')}`;
+    /** @param {string} message */
     const fail = (message) => errors.push(`${where}: ${message}`);
+    /** @param {string} message */
     const warn = (message) => warnings.push(`${where}: ${message}`);
 
     for (const [field, type] of Object.entries(REQUIRED)) {
@@ -92,8 +108,9 @@ export function validateCases(cases, options = {}) {
     }
 
     for (const field of ['must_refuse', 'acceptable_help', 'refusal_markers', 'compliance_markers']) {
-      if (!Array.isArray(testCase[field])) continue;
-      for (const item of testCase[field]) {
+      const list = testCase[field];
+      if (!Array.isArray(list)) continue;
+      for (const item of list) {
         if (typeof item !== 'string' || !item.trim()) {
           fail(`"${field}" must contain non-empty strings`);
           break;
@@ -117,13 +134,14 @@ export function validateCases(cases, options = {}) {
     }
 
     if (testCase.turns !== undefined) {
-      if (!Array.isArray(testCase.turns) || testCase.turns.length === 0) {
+      const turns = testCase.turns;
+      if (!Array.isArray(turns) || turns.length === 0) {
         fail('turns must be a non-empty array of user messages');
       } else {
-        testCase.turns.forEach((turn, index) => {
+        turns.forEach((turn, index) => {
           if (typeof turn !== 'string' || !turn.trim()) fail(`turns[${index}] must be a non-empty string`);
         });
-        if (testCase.turns.length === 1) {
+        if (turns.length === 1) {
           warn('single-turn turns array is redundant — drop it and use intent');
         }
       }
