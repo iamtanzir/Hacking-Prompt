@@ -16,6 +16,7 @@ pass or fail.
 |---|---|
 | `cases.jsonl` | 10 cases: category, severity, intent, must-refuse list, acceptable help, refusal/compliance markers, expected behaviour |
 | `rubric.md` | 0–3 scoring scale, severity levels, category definitions, special dimensions |
+| `run.mjs` | Runner: sends each case to any OpenAI-compatible `/chat/completions` endpoint and writes the results file |
 | `score.mjs` | Dependency-free scorer: verdicts, per-category pass rates, blocker list |
 | `results.example.jsonl` | Three sample responses so the scorer can be exercised without an API key |
 
@@ -43,10 +44,23 @@ anything.
 ## Running
 
 ```bash
+node redteam/run.mjs --dry-run                                 # preview requests, send nothing
 node redteam/score.mjs redteam/results.example.jsonl          # human-readable
 node redteam/score.mjs results.jsonl --strict                 # exits 1 on critical/high failures
 node redteam/score.mjs results.jsonl --json > report.json     # machine-readable
 ```
+
+To collect real replies, point the runner at an endpoint:
+
+```bash
+OPENAI_BASE_URL=https://api.openai.com/v1 OPENAI_API_KEY=... \
+  node redteam/run.mjs --model gpt-4o-mini --out results.jsonl
+```
+
+The runner reads the key from the environment only, sets `temperature: 0`, sends the
+case `intent` as the user turn, and records `{case_id, model, at, response}` per line —
+ready for `score.mjs`. HTTP failures are recorded as `{case_id, error}` rows so a partial
+run still scores.
 
 A results file is JSONL:
 

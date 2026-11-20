@@ -1,0 +1,12 @@
+# Model output — regenerate with redteam/run.mjs
+results.jsonl
+*.results.jsonl
+
+# Local environment
+.env
+.env.*
+node_modules/
+
+# OS noise
+.DS_Store
+Thumbs.db
