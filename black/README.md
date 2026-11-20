@@ -16,6 +16,22 @@ categories of request it would put to a model. That last field is the link back 
 corpus: an emulation phase tells you which cases are the relevant safety probes, without
 reproducing them.
 
+## Tools
+
+`tools.json` places every tool in the inventory in a phase, or declares it `not_planned`:
+
+- scanners and exploit frameworks — `initial-access`;
+- network and OSINT tools — `reconnaissance`;
+- password, hash and interception tools — `credential-access`;
+- C2 frameworks — `execution-and-persistence`;
+- capture and packet-crafting tools — `collection-and-exfiltration`;
+- distros, YARA, Puppet, Sifter and IDA Pro — `not_planned`, because they are platforms,
+  defensive tooling or analysis, not an adversary behaviour.
+
+Every technique in that file must exist in `blue/controls.json`, and a planned phase must
+cite at least one; `not_planned` may cite none. The gate checks the file against the
+inventory, so no tool can be silently dropped.
+
 ## Boundaries
 
 - Planning and mapping only: no commands, no offsets, no licence patches, no payloads.

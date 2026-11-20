@@ -16,8 +16,11 @@ the defensive and offensive sides do with the result.
 
 `teams/check.mjs` reads all three packs and checks them against data that already exists:
 
-- gray may only use categories and expectations that appear in `redteam/cases.jsonl`;
-- black may only cite ATT&CK techniques that appear in `blue/controls.json`;
+- every team's `tools.json` must cover exactly the tools in `redteam/tools.json` — no
+  tool missing, none invented, no case listed twice;
+- gray may only use categories, expectations and framings the gate knows;
+- black may only cite phases it declares and ATT&CK techniques that appear in
+  `blue/controls.json`;
 - white must name a rubric file that exists.
 
 That is the whole point of putting these cells in the repo: a claim like "we triage

@@ -152,9 +152,9 @@ docs/
 └── pentesting-roadmap.md   12-week legal learning path, resources and consent rules
 teams/                      index of the colour teams and the gate that checks them
 teams/check.mjs             cross-checks white, gray and black against red and blue data
-white/                      authority, scope and stop conditions (roe.json)
-gray/                       dual-use triage before a request is scored (triage.json)
-black/                      adversary emulation planning mapped to ATT&CK (emulation.json)
+white/                      authority rules (roe.json + tools.json, all 42 tools)
+gray/                       dual-use triage (triage.json + tools.json, all 42 tools)
+black/                      emulation phases (emulation.json + tools.json, all 42 tools)
 blue/
 ├── README.md               detection and hardening priorities, mobile controls
 ├── controls.json           42 controls: detect, harden, ATT&CK, paired by case id

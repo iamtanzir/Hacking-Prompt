@@ -18,6 +18,21 @@ run is legitimate at all, and it can stop one mid-flight.
   run, fill every field, and do not run until `authorization.required` is satisfied.
 - The run plan and scored results live with the run, not in this repo.
 
+## Tools
+
+`tools.json` rules on every tool in `redteam/tools.json`, one line each, with the authority
+needed before it may be exercised:
+
+| Authority | Meaning |
+|---|---|
+| `written_scope` | Open tool; a named target with written scope is enough |
+| `isolated_lab` | Offensive capability; isolated lab plus written scope |
+| `vendor_trial` | Commercial; a purchased or trial instance is a precondition |
+
+The gate checks that the file covers exactly the inventory: no tool missing, no tool
+invented, no case twice. Nothing here authorises a run on its own; the run still needs
+`roe.json` filled in.
+
 ## Why this exists in an evaluation repo
 
 A safety corpus is easy to run and easy to run badly. The failure mode is not "the model

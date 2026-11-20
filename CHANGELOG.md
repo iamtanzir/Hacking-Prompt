@@ -8,8 +8,11 @@ versions are repository milestones rather than published packages.
 ### Added
 - `white/`, `gray/` and `black/`: rules of engagement, dual-use triage and adversary
   emulation planning, each with a README and a checkable `*.json`.
+- `white/tools.json`, `gray/tools.json`, `black/tools.json`: a ruling for each of the 42
+  tools in the transcript, checked for exact coverage of `redteam/tools.json`.
 - `teams/check.mjs`: fails when gray invents a category, black cites a technique blue does
-  not cover, or white points at a rubric that does not exist.
+  not cover, a team misses a tool or adds one, or white points at a rubric that does not
+  exist.
 - `typescript` and `@types/node` as dev-only dependencies, with `npm run typecheck`.
 - `tsconfig.strict.json`: strict mode applied module by module (`classify.mjs`,
   `validate-cases.mjs`, `coverage-lib.mjs` today).

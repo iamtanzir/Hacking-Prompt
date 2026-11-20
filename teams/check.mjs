@@ -6,8 +6,9 @@
  *
  * The white, gray and black packs claim things that other files already describe.
  * This gate makes those claims checkable:
+ *   - every team rules on exactly the tools in redteam/tools.json, no gaps and no extras
  *   - gray may only use categories and expectations present in cases.jsonl
- *   - black may only cite ATT&CK techniques present in blue/controls.json
+ *   - black may only cite phases it declares and ATT&CK techniques blue covers
  *   - white must point at a rubric that exists
  *
  * The rule lives in checkTeams so it can be unit tested; this file loads the data.
@@ -25,10 +26,103 @@ const root = path.join(here, '..');
  * @property {Set<string>} categories categories used by the case file
  * @property {Set<string>} expected expected verdicts used by the case file
  * @property {Set<string>} techniques ATT&CK ids present in blue/controls.json
+ * @property {Set<string>} phases phase names declared in black/emulation.json
  * @property {(relativePath: string) => boolean} exists resolves a repo-relative path
+ */
+
+/** Authority rulings white may hand out. */
+export const AUTHORITIES = new Set(['written_scope', 'vendor_trial', 'isolated_lab']);
+
+/** Request framings gray may use. */
+export const FRAMINGS = new Set(['licence_bypass', 'operational_steps', 'concept', 'defence']);
+
+/** Tools black deliberately leaves out of an emulation plan. */
+export const NOT_PLANNED = 'not_planned';
+
+/**
+ * Per-team tool coverage. Every team must rule on exactly the tools in
+ * redteam/tools.json: no tool missing, no tool invented, no case listed twice.
+ * That is what stops the packs from drifting away from the transcript's list.
  *
+ * @param {'white'|'gray'|'black'} team
+ * @param {any[]} entries
+ * @param {Array<{case: string, name: string}>} tools
+ * @param {Context} context
+ */
+export function checkTeamTools(team, entries, tools, context) {
+  /** @type {string[]} */
+  const errors = [];
+  if (!Array.isArray(entries) || entries.length === 0) {
+    return { errors: [`${team}/tools.json: no entries`], stats: { entries: 0, covered: 0 } };
+  }
+
+  const byCase = new Map(tools.map((tool) => [tool.case, tool.name]));
+  /** @type {Set<string>} */
+  const seen = new Set();
+
+  entries.forEach((entry, index) => {
+    const where = `${team}/tools.json[${index}]`;
+    if (typeof entry?.case !== 'string' || !entry.case) {
+      errors.push(`${where}: "case" is required`);
+      return;
+    }
+    if (seen.has(entry.case)) errors.push(`${where}: duplicate case ${entry.case}`);
+    seen.add(entry.case);
+
+    if (!byCase.has(entry.case)) {
+      errors.push(`${where}: ${entry.case} is not in redteam/tools.json`);
+      return;
+    }
+    if (entry.tool !== byCase.get(entry.case)) {
+      errors.push(`${where}: tool is "${entry.tool}", inventory says "${byCase.get(entry.case)}"`);
+    }
+
+    if (team === 'white' && !AUTHORITIES.has(entry.authority)) {
+      errors.push(`${where}: authority "${entry.authority}" is not one of ${[...AUTHORITIES].join(', ')}`);
+    }
+    if (team === 'gray') {
+      if (!context.expected.has(entry.default)) {
+        errors.push(`${where}: default "${entry.default}" is not used by cases.jsonl`);
+      }
+      if (!FRAMINGS.has(entry.framing)) {
+        errors.push(`${where}: framing "${entry.framing}" is not one of ${[...FRAMINGS].join(', ')}`);
+      }
+    }
+    if (team === 'black') {
+      const planned = entry.phase !== NOT_PLANNED;
+      if (planned && !context.phases.has(entry.phase)) {
+        errors.push(`${where}: phase "${entry.phase}" is not declared in black/emulation.json`);
+      }
+      if (!Array.isArray(entry.techniques)) {
+        errors.push(`${where}: "techniques" must be an array`);
+        return;
+      }
+      if (planned && entry.techniques.length === 0) {
+        errors.push(`${where}: a planned phase needs at least one technique`);
+      }
+      if (!planned && entry.techniques.length > 0) {
+        errors.push(`${where}: ${NOT_PLANNED} must not cite techniques`);
+      }
+      for (const technique of entry.techniques) {
+        if (!context.techniques.has(technique)) {
+          errors.push(`${where}: "${technique}" is not in blue/controls.json`);
+        }
+      }
+    }
+  });
+
+  for (const tool of tools) {
+    if (!seen.has(tool.case)) errors.push(`${team}/tools.json: missing ${tool.name} (${tool.case})`);
+  }
+
+  const covered = tools.filter((tool) => seen.has(tool.case)).length;
+  return { errors, stats: { entries: entries.length, covered } };
+}
+
+/**
  * @param {{white: any, gray: any, black: any}} packs
  * @param {Context} context
+ * @returns {{errors: string[], stats: {teams: number, decisions: number, phases: number, stopConditions: number}}}
  */
 export function checkTeams(packs, context) {
   /** @type {string[]} */
@@ -135,22 +229,37 @@ if (process.argv[1] && fileURLToPath(import.meta.url) === path.resolve(process.a
     .filter(Boolean)
     .map((line) => JSON.parse(line));
   const controls = read('blue/controls.json');
+  const tools = read('redteam/tools.json');
+  const white = read('white/roe.json');
+  const gray = read('gray/triage.json');
+  const black = read('black/emulation.json');
 
-  const { errors, stats } = checkTeams(
-    { white: read('white/roe.json'), gray: read('gray/triage.json'), black: read('black/emulation.json') },
-    {
-      categories: new Set(cases.map((testCase) => testCase.category)),
-      expected: new Set(cases.map((testCase) => testCase.expected)),
-      techniques: new Set(controls.flatMap((control) => control.mitre || [])),
-      exists: (relative) => fs.existsSync(path.join(root, relative))
-    }
-  );
+  const context = {
+    categories: new Set(cases.map((testCase) => testCase.category)),
+    expected: new Set(cases.map((testCase) => testCase.expected)),
+    techniques: new Set(controls.flatMap((control) => control.mitre || [])),
+    phases: new Set(black.phases.map((phase) => phase.phase)),
+    exists: (relative) => fs.existsSync(path.join(root, relative))
+  };
 
+  const packs = checkTeams({ white, gray, black }, context);
+  const toolPacks = [
+    checkTeamTools('white', read('white/tools.json'), tools, context),
+    checkTeamTools('gray', read('gray/tools.json'), tools, context),
+    checkTeamTools('black', read('black/tools.json'), tools, context)
+  ];
+
+  const errors = [...packs.errors, ...toolPacks.flatMap((pack) => pack.errors)];
   for (const error of errors) console.error(`error ${error}`);
   console.log(
-    `${stats.teams} packs, ${stats.stopConditions} stop conditions, ` +
-      `${stats.decisions} triage decisions, ${stats.phases} emulation phases`
+    `${packs.stats.teams} packs, ${packs.stats.stopConditions} stop conditions, ` +
+      `${packs.stats.decisions} triage decisions, ${packs.stats.phases} emulation phases`
   );
-  console.log(errors.length ? `${errors.length} error(s)` : 'aligned with the case file and the control map');
+  console.log(
+    toolPacks
+      .map((pack, index) => `${['white', 'gray', 'black'][index]}: ${pack.stats.covered}/${tools.length} tools`)
+      .join(', ')
+  );
+  console.log(errors.length ? `${errors.length} error(s)` : 'aligned with the case file, the transcript and the control map');
   process.exit(errors.length ? 1 : 0);
 }
