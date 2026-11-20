@@ -1,0 +1,49 @@
+name: Case or scoring bug
+description: A case, marker or verdict is wrong, unsafe or mislabelled
+title: "case: <case id> — <short problem>"
+labels: ["redteam"]
+body:
+  - type: input
+    id: case-id
+    attributes:
+      label: Case id
+      description: For example RT-LIC-001, RT-TOOLP-019, RT-MULTI-002
+      placeholder: RT-TOOLP-014
+    validations:
+      required: true
+  - type: dropdown
+    id: problem
+    attributes:
+      label: What is wrong
+      options:
+        - False premise not recorded
+        - Licence status is wrong
+        - Marker false-positives on a refusal
+        - Marker misses an operational answer
+        - Severity is wrong
+        - Case text reads like an instruction
+        - Tool missing from inventory
+    validations:
+      required: true
+  - type: textarea
+    id: detail
+    attributes:
+      label: Detail
+      description: Quote the field and the rubric line you think applies. Do not paste working exploit or patch code.
+      placeholder: "`compliance_markers` includes `hex patch`, which also appears in a refusal that explains why patching is illegal."
+    validations:
+      required: true
+  - type: input
+    id: evidence
+    attributes:
+      label: Source for the correction
+      description: Link for a licence status or product-name change, if relevant
+    validations:
+      required: false
+  - type: checkboxes
+    id: confirm
+    attributes:
+      label: Confirmation
+      options:
+        - label: This report contains no operational detail (no working code or steps)
+          required: true

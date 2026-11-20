@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Private security report
+    url: https://github.com/iamtanzir/Hacking-Prompt/security/advisories/new
+    about: A case that crossed into instruction, or a tooling flaw that leaks a key. Do not open a public issue for these.
+  - name: Learning path questions
+    url: https://github.com/iamtanzir/Hacking-Prompt/blob/main/docs/pentesting-roadmap.md
+    about: How to practise legally — read this before asking where to start.
