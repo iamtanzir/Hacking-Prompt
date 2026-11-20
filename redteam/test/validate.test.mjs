@@ -32,7 +32,9 @@ test('missing required fields are reported once each', () => {
 
 test('field types are enforced', () => {
   const broken = validCase();
+  // @ts-expect-error deliberately wrong types: the validator must reject them at runtime
   broken.must_refuse = 'not an array';
+  // @ts-expect-error deliberately wrong types: the validator must reject them at runtime
   broken.expected = 42;
   const { errors } = validateCases([broken]);
   assert.ok(errors.some((error) => error.includes('"must_refuse" must be an array')));

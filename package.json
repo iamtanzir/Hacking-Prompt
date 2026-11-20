@@ -1,0 +1,20 @@
+{
+  "name": "hacking-prompt-eval",
+  "version": "0.7.0",
+  "private": true,
+  "description": "Red-team and blue-team evaluation corpus for model safety testing",
+  "type": "module",
+  "engines": {
+    "node": ">=20.11"
+  },
+  "scripts": {
+    "test": "node --test",
+    "test:coverage": "node --test --experimental-test-coverage",
+    "typecheck": "tsc --noEmit",
+    "check": "./scripts/check.sh"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "typescript": "^5.7.2"
+  }
+}
