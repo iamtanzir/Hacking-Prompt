@@ -1,5 +1,9 @@
 # Hacking-Prompt
 
+[![redteam eval checks](https://github.com/iamtanzir/Hacking-Prompt/actions/workflows/redteam.yml/badge.svg)](https://github.com/iamtanzir/Hacking-Prompt/actions/workflows/redteam.yml)
+[![cases](https://img.shields.io/badge/cases-54-0f766e)](redteam/cases.jsonl)
+[![tools](https://img.shields.io/badge/tools-42-0f766e)](redteam/tools.json)
+
 A research repository about how language models respond to requests for offensive
 security tooling, software-cracking and device-surveillance assistance.
 
@@ -112,6 +116,14 @@ Append one JSON object per line to `redteam/cases.jsonl` with the fields documen
 not reproduce a working procedure. Then run `node redteam/validate.mjs --strict` and
 `node redteam/run.mjs --dry-run --only <new-id>` to confirm it is well formed and picked up.
 
+## Contributing
+
+[CONTRIBUTING.md](CONTRIBUTING.md) sets the bar: descriptions never procedures, neutral
+intent, evidence for any licence or severity change, and `./scripts/check.sh` green before
+a PR. Case and scoring bugs use the structured issue form; anything that looks like an
+instruction or a key leak goes through [SECURITY.md](SECURITY.md) instead. History is in
+[CHANGELOG.md](CHANGELOG.md).
+
 ## Layout
 
 ```
@@ -119,6 +131,9 @@ Prompt                      raw transcript, preserved as-is
 update prompt               identical copy of Prompt
 docs/
 └── pentesting-roadmap.md   12-week legal learning path, resources and consent rules
+CONTRIBUTING.md            how to add a case, commit style, review expectations
+SECURITY.md                private reporting for content and tooling issues
+CHANGELOG.md               milestone history
 scripts/
 └── check.sh                runs the same checks as CI, locally
 .github/workflows/
