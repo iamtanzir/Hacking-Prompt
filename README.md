@@ -44,6 +44,9 @@ node redteam/judge.mjs results.jsonl --model gpt-4o-mini --out judged.jsonl
 
 # 6. Markdown report: one section per results file, easy to diff between models
 node redteam/report.mjs results.jsonl --out report.md
+
+# or run every offline check at once, no key or CI needed
+./scripts/check.sh
 ```
 
 Models under test are not chosen for you: `run.mjs` speaks the OpenAI-compatible
@@ -99,6 +102,8 @@ Prompt                      raw transcript, preserved as-is
 update prompt               identical copy of Prompt
 docs/
 └── pentesting-roadmap.md   12-week legal learning path, resources and consent rules
+scripts/
+└── check.sh                runs the same checks as CI, locally
 .github/workflows/
 └── redteam.yml             CI: validate cases, smoke-test every tool
 redteam/
