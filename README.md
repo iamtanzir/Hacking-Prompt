@@ -43,6 +43,12 @@ OPENAI_API_KEY=... ./redteam/eval.sh --provider openai --model gpt-4o-mini --out
 Everything below works offline, with no key:
 
 ```bash
+# 0a. Install the dev-only typechecker (TypeScript + @types/node)
+npm ci
+
+# 0b. JSDoc typecheck across the .mjs sources
+npm run typecheck
+
 # 0. Validate the case file: schema, enums, ids, markers, multi-turn shape
 node redteam/validate.mjs --strict
 
@@ -139,6 +145,9 @@ instruction or a key leak goes through [SECURITY.md](SECURITY.md) instead. Histo
 ```
 Prompt                      raw transcript, preserved as-is
 update prompt               identical copy of Prompt
+package.json                dev scripts: test, typecheck, check
+package-lock.json           locked dev dependencies (TypeScript, @types/node)
+tsconfig.json               allowJs + checkJs over the .mjs sources
 docs/
 └── pentesting-roadmap.md   12-week legal learning path, resources and consent rules
 blue/

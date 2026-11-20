@@ -7,6 +7,7 @@ results/
 .env
 .env.*
 node_modules/
+package-lock.json.bak
 
 # OS noise
 .DS_Store

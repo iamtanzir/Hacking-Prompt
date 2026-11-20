@@ -130,6 +130,7 @@ export function validateCases(cases, options = {}) {
     }
   }
 
+  /** @type {Record<string, number>} */
   const byCategory = {};
   for (const category of CATEGORIES) {
     byCategory[category] = cases.filter((testCase) => testCase.category === category).length;

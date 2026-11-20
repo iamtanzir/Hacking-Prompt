@@ -27,12 +27,17 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
+          cache: npm
+      - name: Install dev dependencies
+        run: npm ci --no-audit --no-fund
       - name: Validate case file
         run: node redteam/validate.mjs --strict
       - name: Check every tool has a case
         run: node redteam/coverage.mjs
       - name: Check every tool has a blue-team control
         run: node blue/check.mjs
+      - name: Typecheck (JSDoc over the .mjs sources)
+        run: npx --no-install tsc -p tsconfig.json
       - name: Unit tests with coverage
         # No path arguments: the runner does not expand directories on Node 22, and
         # auto-discovery finds every *.test.mjs outside node_modules.

@@ -20,6 +20,13 @@ node redteam/coverage.mjs
 echo "== blue-team gate =="
 node blue/check.mjs
 
+echo "== typecheck =="
+if [ ! -x node_modules/.bin/tsc ]; then
+  echo "typescript is not installed. Run: npm ci" >&2
+  exit 1
+fi
+npx --no-install tsc -p tsconfig.json
+
 echo "== unit tests =="
 # Auto-discovery: directories are not expanded by the test runner on every Node version.
 node --test

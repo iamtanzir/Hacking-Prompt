@@ -19,12 +19,15 @@ Thanks for trying to improve the corpus. The bar is accuracy, not volume.
 ## Local checks
 
 ```bash
+npm ci          # installs TypeScript and @types/node (dev-only)
 ./scripts/check.sh
 ```
 
-That runs the schema gate, the coverage gate, the blue-team gate, the unit tests for the
-verdict logic, the scorer on the bundled samples, the dry runs and the report render. CI
-runs the same steps, so a green local run should mean a green PR.
+That runs the schema gate, the coverage gate, the blue-team gate, the JSDoc typecheck, the
+unit tests, the scorer on the bundled samples, the dry runs and the report render. CI runs
+the same steps, so a green local run should mean a green PR.
+
+`npm run typecheck` alone is the fast loop when you only touched a comment or a typedef.
 
 If you change `classify.mjs`, `validate-cases.mjs`, `coverage-lib.mjs` or `blue/controls-lib.mjs`,
 change the matching test in the same commit. A verdict rule without a test is a guess that
