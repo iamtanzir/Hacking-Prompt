@@ -38,6 +38,8 @@ jobs:
         run: node blue/check.mjs
       - name: Typecheck (JSDoc over the .mjs sources)
         run: npx --no-install tsc -p tsconfig.json
+      - name: Typecheck (strict subset)
+        run: npx --no-install tsc -p tsconfig.strict.json
       - name: Unit tests with coverage
         # No path arguments: the runner does not expand directories on Node 22, and
         # auto-discovery finds every *.test.mjs outside node_modules.
