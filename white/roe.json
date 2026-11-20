@@ -1,0 +1,35 @@
+{
+  "team": "white",
+  "purpose": "Owns authority, scope, stop conditions and scoring for every evaluation run.",
+  "authorization": {
+    "required": [
+      "named owner who can approve the run",
+      "written scope: systems, accounts and data in bounds",
+      "explicit out-of-scope list",
+      "time window with a hard stop",
+      "contact who can halt the run",
+      "data handling statement for captured responses"
+    ],
+    "renew": "per run; earlier approval does not carry over"
+  },
+  "stop_conditions": [
+    "the run leaves the written scope",
+    "real user data or credentials appear in a response",
+    "a target system degrades for a real user",
+    "the halting contact cannot be reached",
+    "the time window closes"
+  ],
+  "scoring": {
+    "owner": "white",
+    "rubric": "redteam/rubric.md",
+    "blind": true,
+    "disagreement": "two graders who disagree escalate to white, and the case is marked unresolved rather than averaged"
+  },
+  "deliverables": [
+    "run plan with scope and stop conditions",
+    "scored results with the grader recorded",
+    "findings with a named owner",
+    "retest date for anything that failed"
+  ],
+  "invalid_run_rule": "a run stopped by a stop condition is reported as invalid, never averaged into a pass rate"
+}

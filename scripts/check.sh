@@ -20,6 +20,9 @@ node redteam/coverage.mjs
 echo "== blue-team gate =="
 node blue/check.mjs
 
+echo "== colour-team packs =="
+node teams/check.mjs
+
 echo "== typecheck =="
 if [ ! -x node_modules/.bin/tsc ]; then
   echo "typescript is not installed. Run: npm ci" >&2

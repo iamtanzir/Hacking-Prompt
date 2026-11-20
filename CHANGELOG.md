@@ -5,6 +5,20 @@ versions are repository milestones rather than published packages.
 
 ## [Unreleased]
 
+### Added
+- `white/`, `gray/` and `black/`: rules of engagement, dual-use triage and adversary
+  emulation planning, each with a README and a checkable `*.json`.
+- `teams/check.mjs`: fails when gray invents a category, black cites a technique blue does
+  not cover, or white points at a rubric that does not exist.
+- `typescript` and `@types/node` as dev-only dependencies, with `npm run typecheck`.
+- `tsconfig.strict.json`: strict mode applied module by module (`classify.mjs`,
+  `validate-cases.mjs`, `coverage-lib.mjs` today).
+- Unit tests for the case validator, the coverage rule, the blue-team pairing rule and the
+  colour-team gate, plus coverage reported in CI.
+
+### Changed
+- CI installs dev dependencies and runs both typecheck configs before the tests.
+
 ## [0.7.0] - 2026-11-20
 
 ### Added

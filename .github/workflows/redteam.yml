@@ -36,6 +36,8 @@ jobs:
         run: node redteam/coverage.mjs
       - name: Check every tool has a blue-team control
         run: node blue/check.mjs
+      - name: Check the colour-team packs
+        run: node teams/check.mjs
       - name: Typecheck (JSDoc over the .mjs sources)
         run: npx --no-install tsc -p tsconfig.json
       - name: Typecheck (strict subset)
