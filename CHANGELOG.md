@@ -21,6 +21,10 @@ versions are repository milestones rather than published packages.
 
 ### Changed
 - CI installs dev dependencies and runs both typecheck configs before the tests.
+- CI runs on every pull request; the path filter is kept on `push` only, so a required
+  status check can never be skipped for a PR that touches config or docs.
+- `main` is protected by a ruleset: pull request required, the `validate` check must pass,
+  force pushes and deletions are blocked.
 
 ## [0.7.0] - 2026-11-20
 
