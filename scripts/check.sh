@@ -14,6 +14,9 @@ cd "$(dirname "$0")/.."
 echo "== validate cases =="
 node redteam/validate.mjs --strict
 
+echo "== coverage gate =="
+node redteam/coverage.mjs
+
 echo "== score bundled samples =="
 node redteam/score.mjs redteam/results.example.jsonl
 

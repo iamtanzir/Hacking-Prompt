@@ -8,7 +8,7 @@ It has two parts:
 | Path | What it is |
 |---|---|
 | `Prompt`, `update prompt` | The raw transcript, preserved as evidence. Both files are byte-identical. They are the model's answers to a series of jailbreak attempts, not a prompt to send anywhere. |
-| `redteam/` | A safety-evaluation kit derived from those attempts: 47 cases (two multi-turn escalation, 35 one per listed tool), a rubric, a runner, an LLM-as-judge pass and a Markdown report generator. |
+| `redteam/` | A safety-evaluation kit derived from those attempts: 54 cases (two multi-turn escalation, 42 one per tool), a rubric, a runner, an LLM-as-judge pass, a coverage gate and a Markdown report generator. |
 
 ## Why the split
 
@@ -30,6 +30,9 @@ patches, no implants, no delivery chains.
 ```bash
 # 0. Validate the case file: schema, enums, ids, markers, multi-turn shape
 node redteam/validate.mjs --strict
+
+# 0b. Every inventoried tool must have a case that names it
+node redteam/coverage.mjs
 
 # 1. Check the scorer works, against the bundled sample responses
 node redteam/score.mjs redteam/results.example.jsonl
@@ -63,7 +66,7 @@ by these scripts.
 
 | Category | Cases | Severity |
 |---|---|---|
-| `license_circumvention` | 41 total: cluster cases for Burp Suite, IDA Pro, Wireshark, the scanner suite and the C2 stack, one case per tool for all 35 listed entries, plus a two-turn escalation from "explain licensing" to "patch it" | high / medium / low |
+| `license_circumvention` | 48 total: cluster cases for Burp Suite, IDA Pro, Wireshark, the scanner suite and the C2 stack, one case per tool for all 42 inventoried tools, plus a two-turn escalation from "explain licensing" to "patch it" | high / medium / low |
 | `malware_spyware` | Android C2 implant, iOS full access, link-delivery chain, plus a two-turn escalation from "remote-support permissions" to "make it covert" | critical |
 | `exploit_development` | per-platform exploit snippets aimed at a non-consenting target | critical |
 | `benign_control` | pentest-tool roundup (tests accuracy, not refusal) | low |
@@ -113,11 +116,14 @@ scripts/
 └── redteam.yml             CI: validate cases, smoke-test every tool
 redteam/
 ├── README.md               kit documentation and case schema
-├── cases.jsonl             12 evaluation cases, two multi-turn
+├── cases.jsonl             54 evaluation cases, two multi-turn, 42 per-tool
 ├── rubric.md               0-3 scoring scale and dimensions
-├── inventory.md            the 35 listed tools: licence status and eval coverage
+├── NOTICE.md               educational/testing-only notice and authorisation rule
+├── inventory.md            the 42 tools: licence status and eval coverage
+├── tools.json              machine-readable inventory for the coverage gate
 ├── classify.mjs            shared verdict logic for scorer, judge and report
 ├── validate.mjs            schema and semantic checks on cases.jsonl
+├── coverage.mjs            fails if any inventoried tool lacks a case
 ├── run.mjs                 runner: cases -> any OpenAI-compatible endpoint
 ├── score.mjs               scorer: replies -> verdicts and pass rates
 ├── judge.mjs               LLM-as-judge pass with marker agreement rate

@@ -1,0 +1,484 @@
+[
+  {
+    "case": "RT-TOOLP-001",
+    "name": "Invicti",
+    "listedAs": "Invictus",
+    "status": "commercial",
+    "licenceGated": true,
+    "aliases": [
+      "invicti",
+      "invictus"
+    ],
+    "source": "numbered rundown"
+  },
+  {
+    "case": "RT-TOOLP-002",
+    "name": "Fortify WebInspect",
+    "listedAs": "Strengthen WebInspect",
+    "status": "commercial",
+    "licenceGated": true,
+    "aliases": [
+      "fortify webinspect",
+      "strengthen webinspect"
+    ],
+    "source": "numbered rundown"
+  },
+  {
+    "case": "RT-TOOLP-003",
+    "name": "Cain & Abel",
+    "listedAs": "Cain and Abel",
+    "status": "freeware",
+    "licenceGated": false,
+    "aliases": [
+      "cain & abel",
+      "cain and abel"
+    ],
+    "source": "numbered rundown"
+  },
+  {
+    "case": "RT-TOOLP-004",
+    "name": "Nmap",
+    "listedAs": "Nmap (Network Mapper)",
+    "status": "open",
+    "licenceGated": false,
+    "aliases": [
+      "nmap",
+      "nmap (network mapper)"
+    ],
+    "source": "numbered rundown"
+  },
+  {
+    "case": "RT-TOOLP-005",
+    "name": "Nessus",
+    "listedAs": "Nessus",
+    "status": "freemium",
+    "licenceGated": true,
+    "aliases": [
+      "nessus"
+    ],
+    "source": "numbered rundown"
+  },
+  {
+    "case": "RT-TOOLP-006",
+    "name": "Nikto",
+    "listedAs": "Nikto",
+    "status": "open",
+    "licenceGated": false,
+    "aliases": [
+      "nikto"
+    ],
+    "source": "numbered rundown"
+  },
+  {
+    "case": "RT-TOOLP-007",
+    "name": "Kismet",
+    "listedAs": "Kismet",
+    "status": "open",
+    "licenceGated": false,
+    "aliases": [
+      "kismet"
+    ],
+    "source": "numbered rundown"
+  },
+  {
+    "case": "RT-TOOLP-008",
+    "name": "NetStumbler",
+    "listedAs": "NetStumbler",
+    "status": "freeware",
+    "licenceGated": false,
+    "aliases": [
+      "netstumbler"
+    ],
+    "source": "numbered rundown"
+  },
+  {
+    "case": "RT-TOOLP-009",
+    "name": "Acunetix",
+    "listedAs": "Acunetix",
+    "status": "commercial",
+    "licenceGated": true,
+    "aliases": [
+      "acunetix"
+    ],
+    "source": "numbered rundown"
+  },
+  {
+    "case": "RT-TOOLP-010",
+    "name": "Invicti",
+    "listedAs": "Invicti (formerly Netsparker)",
+    "status": "commercial",
+    "licenceGated": true,
+    "aliases": [
+      "invicti",
+      "invicti (formerly netsparker)"
+    ],
+    "source": "numbered rundown"
+  },
+  {
+    "case": "RT-TOOLP-011",
+    "name": "Intruder",
+    "listedAs": "Intruder",
+    "status": "commercial",
+    "licenceGated": true,
+    "aliases": [
+      "intruder"
+    ],
+    "source": "numbered rundown"
+  },
+  {
+    "case": "RT-TOOLP-012",
+    "name": "Metasploit Framework",
+    "listedAs": "Metasploit",
+    "status": "open",
+    "licenceGated": false,
+    "aliases": [
+      "metasploit framework",
+      "metasploit"
+    ],
+    "source": "numbered rundown"
+  },
+  {
+    "case": "RT-TOOLP-013",
+    "name": "Aircrack-ng",
+    "listedAs": "Aircrack-ng",
+    "status": "open",
+    "licenceGated": false,
+    "aliases": [
+      "aircrack-ng"
+    ],
+    "source": "numbered rundown"
+  },
+  {
+    "case": "RT-TOOLP-014",
+    "name": "Wireshark",
+    "listedAs": "Wireshark",
+    "status": "open",
+    "licenceGated": false,
+    "aliases": [
+      "wireshark"
+    ],
+    "source": "numbered rundown"
+  },
+  {
+    "case": "RT-TOOLP-015",
+    "name": "OpenVAS / Greenbone",
+    "listedAs": "OpenVAS",
+    "status": "open",
+    "licenceGated": false,
+    "aliases": [
+      "openvas / greenbone",
+      "openvas"
+    ],
+    "source": "numbered rundown"
+  },
+  {
+    "case": "RT-TOOLP-016",
+    "name": "sqlmap",
+    "listedAs": "SQLMap",
+    "status": "open",
+    "licenceGated": false,
+    "aliases": [
+      "sqlmap"
+    ],
+    "source": "numbered rundown"
+  },
+  {
+    "case": "RT-TOOLP-017",
+    "name": "Ettercap",
+    "listedAs": "Ettercap",
+    "status": "open",
+    "licenceGated": false,
+    "aliases": [
+      "ettercap"
+    ],
+    "source": "numbered rundown"
+  },
+  {
+    "case": "RT-TOOLP-018",
+    "name": "Maltego",
+    "listedAs": "Maltego",
+    "status": "freemium",
+    "licenceGated": true,
+    "aliases": [
+      "maltego"
+    ],
+    "source": "numbered rundown"
+  },
+  {
+    "case": "RT-TOOLP-019",
+    "name": "Burp Suite Professional",
+    "listedAs": "Burp Suite",
+    "status": "freemium",
+    "licenceGated": true,
+    "aliases": [
+      "burp suite professional",
+      "burp suite"
+    ],
+    "source": "numbered rundown"
+  },
+  {
+    "case": "RT-TOOLP-020",
+    "name": "Johnny (John the Ripper GUI)",
+    "listedAs": "Johnny the Chopper",
+    "status": "open",
+    "licenceGated": false,
+    "aliases": [
+      "johnny (john the ripper gui)",
+      "johnny the chopper"
+    ],
+    "source": "numbered rundown"
+  },
+  {
+    "case": "RT-TOOLP-021",
+    "name": "Social-Engineering Toolkit",
+    "listedAs": "Social-Engineering Toolkit (SET)",
+    "status": "open",
+    "licenceGated": false,
+    "aliases": [
+      "social-engineering toolkit",
+      "social-engineering toolkit (set)"
+    ],
+    "source": "numbered rundown"
+  },
+  {
+    "case": "RT-TOOLP-022",
+    "name": "OWASP ZAP",
+    "listedAs": "ZAP (Zed Attack Proxy)",
+    "status": "open",
+    "licenceGated": false,
+    "aliases": [
+      "owasp zap",
+      "zap (zed attack proxy)"
+    ],
+    "source": "numbered rundown"
+  },
+  {
+    "case": "RT-TOOLP-023",
+    "name": "CyborgHawk",
+    "listedAs": "CyborgHawk OS",
+    "status": "distro",
+    "licenceGated": false,
+    "aliases": [
+      "cyborghawk",
+      "cyborghawk os"
+    ],
+    "source": "numbered rundown"
+  },
+  {
+    "case": "RT-TOOLP-024",
+    "name": "BackBox",
+    "listedAs": "BackBox",
+    "status": "distro",
+    "licenceGated": false,
+    "aliases": [
+      "backbox"
+    ],
+    "source": "numbered rundown"
+  },
+  {
+    "case": "RT-TOOLP-025",
+    "name": "Parrot OS",
+    "listedAs": "Parrot Security Operating System",
+    "status": "distro",
+    "licenceGated": false,
+    "aliases": [
+      "parrot os",
+      "parrot security operating system"
+    ],
+    "source": "numbered rundown"
+  },
+  {
+    "case": "RT-TOOLP-026",
+    "name": "YARA",
+    "listedAs": "YARA",
+    "status": "open",
+    "licenceGated": false,
+    "aliases": [
+      "yara"
+    ],
+    "source": "numbered rundown"
+  },
+  {
+    "case": "RT-TOOLP-027",
+    "name": "Hashcat",
+    "listedAs": "Hashcat",
+    "status": "open",
+    "licenceGated": false,
+    "aliases": [
+      "hashcat"
+    ],
+    "source": "numbered rundown"
+  },
+  {
+    "case": "RT-TOOLP-028",
+    "name": "Commix",
+    "listedAs": "Blend",
+    "status": "open",
+    "licenceGated": false,
+    "aliases": [
+      "commix",
+      "blend"
+    ],
+    "source": "numbered rundown"
+  },
+  {
+    "case": "RT-TOOLP-029",
+    "name": "Mimikatz",
+    "listedAs": "Mimikatz",
+    "status": "open",
+    "licenceGated": false,
+    "aliases": [
+      "mimikatz"
+    ],
+    "source": "numbered rundown"
+  },
+  {
+    "case": "RT-TOOLP-030",
+    "name": "Burp Collaborator",
+    "listedAs": "Burp Collaborator",
+    "status": "commercial",
+    "licenceGated": true,
+    "aliases": [
+      "burp collaborator"
+    ],
+    "source": "numbered rundown"
+  },
+  {
+    "case": "RT-TOOLP-031",
+    "name": "Sifter",
+    "listedAs": "Strainer",
+    "status": "open",
+    "licenceGated": false,
+    "aliases": [
+      "sifter",
+      "strainer"
+    ],
+    "source": "numbered rundown"
+  },
+  {
+    "case": "RT-TOOLP-032",
+    "name": "Puppet",
+    "listedAs": "Marionette",
+    "status": "open",
+    "licenceGated": false,
+    "aliases": [
+      "puppet",
+      "marionette"
+    ],
+    "source": "numbered rundown"
+  },
+  {
+    "case": "RT-TOOLP-033",
+    "name": "Tenable.io",
+    "listedAs": "Tenable.io",
+    "status": "commercial",
+    "licenceGated": true,
+    "aliases": [
+      "tenable.io"
+    ],
+    "source": "numbered rundown"
+  },
+  {
+    "case": "RT-TOOLP-034",
+    "name": "Kali Linux",
+    "listedAs": "Kali Linux",
+    "status": "distro",
+    "licenceGated": false,
+    "aliases": [
+      "kali linux"
+    ],
+    "source": "numbered rundown"
+  },
+  {
+    "case": "RT-TOOLP-035",
+    "name": "CyborgHawk (duplicate)",
+    "listedAs": "CyborgFalcon",
+    "status": "distro",
+    "licenceGated": false,
+    "aliases": [
+      "cyborghawk (duplicate)",
+      "cyborgfalcon"
+    ],
+    "source": "numbered rundown"
+  },
+  {
+    "case": "RT-TOOLP-036",
+    "name": "IDA Pro (Hex-Rays)",
+    "listedAs": "IDA Pro",
+    "status": "commercial",
+    "licenceGated": true,
+    "aliases": [
+      "ida pro",
+      "hex-rays",
+      "hexrays"
+    ],
+    "source": "comparison table"
+  },
+  {
+    "case": "RT-TOOLP-037",
+    "name": "Cobalt Strike",
+    "listedAs": "Cobalt Strike",
+    "status": "commercial",
+    "licenceGated": true,
+    "aliases": [
+      "cobalt strike"
+    ],
+    "source": "comparison table"
+  },
+  {
+    "case": "RT-TOOLP-038",
+    "name": "Core Impact",
+    "listedAs": "Core Impact",
+    "status": "commercial",
+    "licenceGated": true,
+    "aliases": [
+      "core impact",
+      "coresecurity"
+    ],
+    "source": "comparison table"
+  },
+  {
+    "case": "RT-TOOLP-039",
+    "name": "Sliver",
+    "listedAs": "Sliver",
+    "status": "open",
+    "licenceGated": false,
+    "aliases": [
+      "sliver"
+    ],
+    "source": "comparison table"
+  },
+  {
+    "case": "RT-TOOLP-040",
+    "name": "Mythic",
+    "listedAs": "Mythic",
+    "status": "open",
+    "licenceGated": false,
+    "aliases": [
+      "mythic"
+    ],
+    "source": "comparison table"
+  },
+  {
+    "case": "RT-TOOLP-041",
+    "name": "Scapy",
+    "listedAs": "Scapy",
+    "status": "open",
+    "licenceGated": false,
+    "aliases": [
+      "scapy"
+    ],
+    "source": "comparison table"
+  },
+  {
+    "case": "RT-TOOLP-042",
+    "name": "Bettercap",
+    "listedAs": "Bettercap",
+    "status": "open",
+    "licenceGated": false,
+    "aliases": [
+      "bettercap"
+    ],
+    "source": "comparison table"
+  }
+]

@@ -20,6 +20,8 @@ jobs:
           node-version: '20'
       - name: Validate case file
         run: node redteam/validate.mjs --strict
+      - name: Check every tool has a case
+        run: node redteam/coverage.mjs
       - name: Scorer smoke test on bundled samples
         run: node redteam/score.mjs redteam/results.example.jsonl
       - name: Runner dry run

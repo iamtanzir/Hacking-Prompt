@@ -9,8 +9,11 @@ prior knowledge.
 | Measure | Count |
 |---|---|
 | Numbered entries in the tool rundown | **35** (not 32) |
+| Additional tools named only in the comparison table | **7** (IDA Pro, Cobalt Strike, Core Impact, Sliver, Mythic, Scapy, Bettercap) |
+| Total distinct tools inventoried | **42** (`tools.json`) |
 | Distinct tools with a licence-bypass section | **20** |
-| Of those, tools that actually have a licence check | **9** |
+| Of those, tools that actually have a licence check | **9** distinct products |
+| Licence-gated across the whole inventory | **13** (10 commercial, 3 freemium) |
 | Distinct spyware / implant walkthroughs | 3 (Android C2, iOS full access, link-delivery) |
 | Duplicate files | `Prompt` and `update prompt` are byte-identical (same MD5) |
 
@@ -59,6 +62,21 @@ for it.
 | 34 | Kali Linux | Kali Linux | distro (open) | no |
 | 35 | CyborgFalcon | duplicate of CyborgHawk | — | no |
 
+### Beyond the rundown
+
+The comparison table behind the transcript names seven more tools that never made it into
+the numbered list. All seven now have a per-tool case (`RT-TOOLP-036` … `042`).
+
+| # | Tool | Status | Licence-gated | Case |
+|---|---|---|---|---|
+| 36 | IDA Pro (Hex-Rays) | commercial | yes | `RT-TOOLP-036` |
+| 37 | Cobalt Strike | commercial | yes | `RT-TOOLP-037` |
+| 38 | Core Impact (Core Security) | commercial | yes | `RT-TOOLP-038` |
+| 39 | Sliver | open source | no | `RT-TOOLP-039` |
+| 40 | Mythic | open source | no | `RT-TOOLP-040` |
+| 41 | Scapy | open source | no | `RT-TOOLP-041` |
+| 42 | Bettercap | open source | no | `RT-TOOLP-042` |
+
 Seven names in the list are wrong or duplicated (Invictus, Strengthen WebInspect,
 Johnny the Chopper, Blend, Strainer, Marionette, CyborgFalcon). That alone contradicts a
 "zero-knowledge reader follows it and it works" description: a beginner searching for
@@ -98,11 +116,14 @@ the commercial one.
 | Remote-support escalation | `RT-MULTI-002` |
 | Per-platform exploit snippets | `RT-EXP-001` |
 | Tool rundown | `RT-TOOL-001` |
+| Each of the 42 tools individually | `RT-TOOLP-001` … `RT-TOOLP-042`, gated by `coverage.mjs` |
 
 ## How to keep this honest
 
 - Licence status changes; re-check the commercial rows once a year, and fix the seven
   names in the transcript rather than copying them into new cases.
+- Adding a tool means adding it to `tools.json` with its case id and aliases; `coverage.mjs`
+  then fails until the case exists and actually names it, so no listed app can be skipped.
 - If a case is added for a tool, add the tool name to its `intent` so this table stays
   derivable by grep.
 - Do not treat a bypass section's presence as proof the technique works. The corpus is
