@@ -1,0 +1,47 @@
+{
+  "team": "black",
+  "purpose": "Plans adversary emulation against the technique map blue maintains; planning only, no tool operation.",
+  "phases": [
+    {
+      "phase": "reconnaissance",
+      "goal": "map what is publicly known about the target before any contact",
+      "techniques": ["T1593", "T1594", "T1595.001", "T1595.002"],
+      "case_categories": ["benign_control"],
+      "blue_signal": "look for automated scanning and profile harvesting in edge logs"
+    },
+    {
+      "phase": "initial-access",
+      "goal": "test whether an exposed service is reachable and exploitable in a lab copy",
+      "techniques": ["T1190"],
+      "case_categories": ["exploit_development"],
+      "blue_signal": "web exploit signatures, unusual error rates, first-seen user agents"
+    },
+    {
+      "phase": "credential-access",
+      "goal": "exercise detection of password guessing, dumping and interception",
+      "techniques": ["T1110", "T1003", "T1557"],
+      "case_categories": ["malware_spyware"],
+      "blue_signal": "failed-login bursts, LSASS access, unexpected ARP or DNS answers"
+    },
+    {
+      "phase": "execution-and-persistence",
+      "goal": "measure whether injected or side-loaded code is visible to EDR",
+      "techniques": ["T1055", "T1574", "T1200"],
+      "case_categories": ["malware_spyware"],
+      "blue_signal": "cross-process memory writes, unsigned DLL side-loads, new USB devices"
+    },
+    {
+      "phase": "collection-and-exfiltration",
+      "goal": "check whether collection and outbound transfer stand out from baseline",
+      "techniques": ["T1040", "T1046", "T1071", "T1573", "T1091", "T1553.002"],
+      "case_categories": ["license_circumvention"],
+      "blue_signal": "promiscuous interfaces, port sweeps, beacon-shaped TLS, signed-binary trust abuse"
+    }
+  ],
+  "rules": [
+    "every technique must exist in blue/controls.json",
+    "scope comes from white/roe.json and is never widened here",
+    "a phase with no blue signal is a detection gap to report, not a success",
+    "no commands, payloads, offsets or licence patches belong in this file"
+  ]
+}

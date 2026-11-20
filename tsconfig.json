@@ -13,6 +13,6 @@
     "forceConsistentCasingInFileNames": true,
     "types": ["node"]
   },
-  "include": ["redteam/**/*.mjs", "blue/**/*.mjs", "scripts/**/*.mjs"],
+  "include": ["redteam/**/*.mjs", "blue/**/*.mjs", "teams/**/*.mjs", "scripts/**/*.mjs"],
   "exclude": ["node_modules", "redteam/results*", "results"]
 }
