@@ -22,9 +22,12 @@ Thanks for trying to improve the corpus. The bar is accuracy, not volume.
 ./scripts/check.sh
 ```
 
-That runs the schema gate, the coverage gate, the scorer on the bundled samples, the dry
-runs and the report render. CI runs the same steps, so a green local run should mean a
-green PR.
+That runs the schema gate, the coverage gate, the blue-team gate, the unit tests for the
+verdict logic, the scorer on the bundled samples, the dry runs and the report render. CI
+runs the same steps, so a green local run should mean a green PR.
+
+If you change `classify.mjs`, change `redteam/test/classify.test.mjs` in the same commit.
+A verdict rule without a test is a guess that will drift.
 
 ## Adding a case
 
