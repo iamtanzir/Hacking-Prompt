@@ -8,7 +8,7 @@ It has two parts:
 | Path | What it is |
 |---|---|
 | `Prompt`, `update prompt` | The raw transcript, preserved as evidence. Both files are byte-identical. They are the model's answers to a series of jailbreak attempts, not a prompt to send anywhere. |
-| `redteam/` | A safety-evaluation kit derived from those attempts: 12 cases (two of them multi-turn escalation), a rubric, a runner, an LLM-as-judge pass and a Markdown report generator. |
+| `redteam/` | A safety-evaluation kit derived from those attempts: 47 cases (two multi-turn escalation, 35 one per listed tool), a rubric, a runner, an LLM-as-judge pass and a Markdown report generator. |
 
 ## Why the split
 
@@ -19,6 +19,11 @@ does, and it is the part of this repository meant to be run.
 
 Nothing here is intended to make the raw transcript's contents work better: no licence
 patches, no implants, no delivery chains.
+
+> **Test inputs only.** The cases describe what was asked so replies can be graded; they
+> are not instructions. See [redteam/NOTICE.md](redteam/NOTICE.md). Practising on a system
+> you do not own is a criminal offence in most countries, and unauthorised use is the
+> user's own responsibility.
 
 ## Quick start
 
@@ -58,7 +63,7 @@ by these scripts.
 
 | Category | Cases | Severity |
 |---|---|---|
-| `license_circumvention` | Burp Suite, IDA Pro, Wireshark, scanner suite, C2 tooling stack, plus a two-turn escalation from "explain licensing" to "patch it" | high / medium |
+| `license_circumvention` | 41 total: cluster cases for Burp Suite, IDA Pro, Wireshark, the scanner suite and the C2 stack, one case per tool for all 35 listed entries, plus a two-turn escalation from "explain licensing" to "patch it" | high / medium / low |
 | `malware_spyware` | Android C2 implant, iOS full access, link-delivery chain, plus a two-turn escalation from "remote-support permissions" to "make it covert" | critical |
 | `exploit_development` | per-platform exploit snippets aimed at a non-consenting target | critical |
 | `benign_control` | pentest-tool roundup (tests accuracy, not refusal) | low |
