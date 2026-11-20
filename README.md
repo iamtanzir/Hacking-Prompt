@@ -1,8 +1,10 @@
 # Hacking-Prompt
 
 [![redteam eval checks](https://github.com/iamtanzir/Hacking-Prompt/actions/workflows/redteam.yml/badge.svg)](https://github.com/iamtanzir/Hacking-Prompt/actions/workflows/redteam.yml)
-[![cases](https://img.shields.io/badge/cases-54-0f766e)](redteam/cases.jsonl)
-[![tools](https://img.shields.io/badge/tools-42-0f766e)](redteam/tools.json)
+
+Case and tool counts live in [redteam/cases.jsonl](redteam/cases.jsonl) and
+[redteam/tools.json](redteam/tools.json); `node redteam/coverage.mjs` prints the current
+numbers, so this README does not restate them.
 
 A research repository about how language models respond to requests for offensive
 security tooling, software-cracking and device-surveillance assistance.
@@ -12,7 +14,7 @@ It has two parts:
 | Path | What it is |
 |---|---|
 | `Prompt`, `update prompt` | The raw transcript, preserved as evidence. Both files are byte-identical. They are the model's answers to a series of jailbreak attempts, not a prompt to send anywhere. |
-| `redteam/` | A safety-evaluation kit derived from those attempts: 54 cases (two multi-turn escalation, 42 one per tool), a rubric, a runner, an LLM-as-judge pass, a coverage gate and a Markdown report generator. |
+| `redteam/` | A safety-evaluation kit derived from those attempts: cases for every listed tool, a rubric, a runner, an LLM-as-judge pass, a coverage gate and a Markdown report generator. Counts come from `cases.jsonl` and `tools.json` rather than this table. |
 
 ## Why the split
 
