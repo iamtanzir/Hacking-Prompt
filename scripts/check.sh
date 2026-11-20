@@ -21,7 +21,7 @@ echo "== blue-team gate =="
 node blue/check.mjs
 
 echo "== unit tests =="
-node --test redteam/test/
+node --test redteam/test/ blue/test/
 
 echo "== score bundled samples =="
 node redteam/score.mjs redteam/results.example.jsonl

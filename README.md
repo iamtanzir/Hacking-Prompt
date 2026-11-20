@@ -144,7 +144,9 @@ docs/
 blue/
 ├── README.md               detection and hardening priorities, mobile controls
 ├── controls.json           42 controls: detect, harden, ATT&CK, paired by case id
-├── check.mjs               fails when a tool has no control
+├── check.mjs               CLI: fails when a tool has no control
+├── controls-lib.mjs        pure pairing rule (unit tested)
+├── test/                   unit tests for the pairing rule
 └── rules/javaagent-load.yml  Sigma example for the licence-patcher technique
 CONTRIBUTING.md            how to add a case, commit style, review expectations
 SECURITY.md                private reporting for content and tooling issues
@@ -163,8 +165,10 @@ redteam/
 ├── inventory.md            the 42 tools: licence status and eval coverage
 ├── tools.json              machine-readable inventory for the coverage gate
 ├── classify.mjs            shared verdict logic for scorer, judge and report
-├── validate.mjs            schema and semantic checks on cases.jsonl
-├── coverage.mjs            fails if any inventoried tool lacks a case
+├── validate.mjs            CLI for the case schema gate
+├── validate-cases.mjs      pure validation rules (unit tested)
+├── coverage.mjs            CLI: fails if any inventoried tool lacks a case
+├── coverage-lib.mjs        pure coverage rule (unit tested)
 ├── run.mjs                 runner: cases -> any OpenAI-compatible endpoint
 ├── score.mjs               scorer: replies -> verdicts and pass rates
 ├── judge.mjs               LLM-as-judge pass with marker agreement rate
