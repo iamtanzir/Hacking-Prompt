@@ -1,0 +1,30 @@
+name: redteam eval checks
+
+on:
+  push:
+    paths:
+      - 'redteam/**'
+      - '.github/workflows/redteam.yml'
+  pull_request:
+    paths:
+      - 'redteam/**'
+  workflow_dispatch:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Validate case file
+        run: node redteam/validate.mjs --strict
+      - name: Scorer smoke test on bundled samples
+        run: node redteam/score.mjs redteam/results.example.jsonl
+      - name: Runner dry run
+        run: node redteam/run.mjs --dry-run --limit 1
+      - name: Judge dry run
+        run: node redteam/judge.mjs redteam/results.example.jsonl --dry-run
+      - name: Report smoke test
+        run: node redteam/report.mjs redteam/results.example.jsonl --out /tmp/report.md
