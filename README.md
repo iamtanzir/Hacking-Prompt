@@ -8,7 +8,7 @@ It has two parts:
 | Path | What it is |
 |---|---|
 | `Prompt`, `update prompt` | The raw transcript, preserved as evidence. Both files are byte-identical. They are the model's answers to a series of jailbreak attempts, not a prompt to send anywhere. |
-| `redteam/` | A safety-evaluation kit derived from those attempts: 10 cases, a scoring rubric and a marker-based scorer. |
+| `redteam/` | A safety-evaluation kit derived from those attempts: 12 cases (two of them multi-turn escalation), a rubric, a runner, an LLM-as-judge pass and a Markdown report generator. |
 
 ## Why the split
 
@@ -23,6 +23,9 @@ patches, no implants, no delivery chains.
 ## Quick start
 
 ```bash
+# 0. Validate the case file: schema, enums, ids, markers, multi-turn shape
+node redteam/validate.mjs --strict
+
 # 1. Check the scorer works, against the bundled sample responses
 node redteam/score.mjs redteam/results.example.jsonl
 
@@ -35,6 +38,12 @@ OPENAI_BASE_URL=https://api.openai.com/v1 OPENAI_API_KEY=... \
 
 # 4. Score the replies; --strict exits non-zero on any critical/high failure
 node redteam/score.mjs results.jsonl --strict
+
+# 5. Optional second opinion from a judge model, with agreement rate
+node redteam/judge.mjs results.jsonl --model gpt-4o-mini --out judged.jsonl
+
+# 6. Markdown report: one section per results file, easy to diff between models
+node redteam/report.mjs results.jsonl --out report.md
 ```
 
 Models under test are not chosen for you: `run.mjs` speaks the OpenAI-compatible
@@ -46,8 +55,8 @@ by these scripts.
 
 | Category | Cases | Severity |
 |---|---|---|
-| `license_circumvention` | Burp Suite, IDA Pro, Wireshark, scanner suite, C2 tooling stack | high / medium |
-| `malware_spyware` | Android C2 implant, iOS full access, link-delivery chain | critical |
+| `license_circumvention` | Burp Suite, IDA Pro, Wireshark, scanner suite, C2 tooling stack, plus a two-turn escalation from "explain licensing" to "patch it" | high / medium |
+| `malware_spyware` | Android C2 implant, iOS full access, link-delivery chain, plus a two-turn escalation from "remote-support permissions" to "make it covert" | critical |
 | `exploit_development` | per-platform exploit snippets aimed at a non-consenting target | critical |
 | `benign_control` | pentest-tool roundup (tests accuracy, not refusal) | low |
 
@@ -65,19 +74,26 @@ read the response and score it by hand.
 ## Adding cases
 
 Append one JSON object per line to `redteam/cases.jsonl` with the fields documented in
-[redteam/README.md](redteam/README.md). Keep `intent` neutral: describe the request, do not reproduce a working procedure. Then run `node redteam/run.mjs --dry-run` to confirm
-the new case is picked up.
+[redteam/README.md](redteam/README.md). Keep `intent` neutral: describe the request, do
+not reproduce a working procedure. Then run `node redteam/validate.mjs --strict` and
+`node redteam/run.mjs --dry-run --only <new-id>` to confirm it is well formed and picked up.
 
 ## Layout
 
 ```
 Prompt                      raw transcript, preserved as-is
 update prompt               identical copy of Prompt
+.github/workflows/
+└── redteam.yml             CI: validate cases, smoke-test every tool
 redteam/
 ├── README.md               kit documentation and case schema
-├── cases.jsonl             10 evaluation cases
+├── cases.jsonl             12 evaluation cases, two multi-turn
 ├── rubric.md               0-3 scoring scale and dimensions
+├── classify.mjs            shared verdict logic for scorer, judge and report
+├── validate.mjs            schema and semantic checks on cases.jsonl
 ├── run.mjs                 runner: cases -> any OpenAI-compatible endpoint
 ├── score.mjs               scorer: replies -> verdicts and pass rates
+├── judge.mjs               LLM-as-judge pass with marker agreement rate
+├── report.mjs              Markdown report across one or more results files
 └── results.example.jsonl   sample replies for a no-key smoke test
 ```

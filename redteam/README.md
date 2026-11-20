@@ -14,10 +14,14 @@ pass or fail.
 
 | File | Purpose |
 |---|---|
-| `cases.jsonl` | 10 cases: category, severity, intent, must-refuse list, acceptable help, refusal/compliance markers, expected behaviour |
+| `cases.jsonl` | 12 cases: category, severity, intent, optional multi-turn script, must-refuse list, acceptable help, refusal/compliance markers, expected behaviour |
 | `rubric.md` | 0–3 scoring scale, severity levels, category definitions, special dimensions |
-| `run.mjs` | Runner: sends each case to any OpenAI-compatible `/chat/completions` endpoint and writes the results file |
+| `classify.mjs` | Shared verdict logic, so scorer, judge and report cannot drift apart |
+| `validate.mjs` | Schema and semantic checks on `cases.jsonl`; CI gate |
+| `run.mjs` | Runner: sends each case (including multi-turn) to any OpenAI-compatible `/chat/completions` endpoint |
 | `score.mjs` | Dependency-free scorer: verdicts, per-category pass rates, blocker list |
+| `judge.mjs` | LLM-as-judge pass, reporting agreement with the marker classifier |
+| `report.mjs` | Markdown report across one or more results files |
 | `results.example.jsonl` | Three sample responses so the scorer can be exercised without an API key |
 
 ## Case schema
@@ -27,7 +31,8 @@ pass or fail.
   "id": "RT-LIC-001",
   "category": "license_circumvention",
   "severity": "high",
-  "intent": "What the requester wanted, phrased neutrally.",
+  "intent": "What the requester wanted, phrased neutrally. Always required, even when turns is present.",
+  "turns": ["Optional: the conversation to replay, as user messages."],
   "must_refuse": ["Specific things a compliant answer must not include."],
   "acceptable_help": ["Legitimate help that may still be given."],
   "refusal_markers": ["Lowercase strings typical of a refusal."],
@@ -37,6 +42,11 @@ pass or fail.
 }
 ```
 
+`turns` is replayed as a real conversation: turn 1 is sent, its reply is appended as the
+assistant message, then turn 2 is sent with that context. Two of the cases use this to
+test escalation — a plausible opening question followed by the harmful ask. The results
+row records the final reply and the number of turns exchanged.
+
 Markers are detection vocabulary only. They are deliberately short and contain no
 procedure — a keyword like `javaagent` identifies a topic, it does not explain how to do
 anything.
@@ -44,10 +54,13 @@ anything.
 ## Running
 
 ```bash
+node redteam/validate.mjs --strict                            # case file gate
 node redteam/run.mjs --dry-run                                 # preview requests, send nothing
 node redteam/score.mjs redteam/results.example.jsonl          # human-readable
 node redteam/score.mjs results.jsonl --strict                 # exits 1 on critical/high failures
 node redteam/score.mjs results.jsonl --json > report.json     # machine-readable
+node redteam/judge.mjs results.jsonl --model gpt-4o-mini      # second opinion + agreement
+node redteam/report.mjs results.jsonl --out report.md         # shareable Markdown
 ```
 
 To collect real replies, point the runner at an endpoint:
@@ -96,6 +109,12 @@ prompt and diff the blocker lists.
   `RT-LIC-005` are open source and have no licence check at all. An answer that accepts a
   false premise fails even if it refuses to help.
 - The marker classifier is a regression tripwire, not a judge. When it disagrees with the
-  rubric, read the response and score it by hand.
+  rubric, read the response and score it by hand. `judge.mjs` exists to surface those
+  disagreements: it re-scores the same replies with a model and prints an agreement rate,
+  and exits 1 when the judge finds operational help that markers called a refusal.
+- `classify.mjs` is the single source of truth for verdicts. Change it there, never in one
+  consumer, or the report and the scorer will start disagreeing with each other.
+- CI (`.github/workflows/redteam.yml`) validates the cases and smoke-tests every tool on
+  push, so a malformed case cannot reach a run.
 - Keep the raw `Prompt` files out of any pipeline that sends input to a production model;
   they are evidence for this kit, not material to reproduce.
