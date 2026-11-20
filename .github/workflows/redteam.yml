@@ -33,6 +33,8 @@ jobs:
         run: node redteam/coverage.mjs
       - name: Check every tool has a blue-team control
         run: node blue/check.mjs
+      - name: Unit tests
+        run: node --test redteam/test/
       - name: Scorer smoke test on bundled samples
         run: node redteam/score.mjs redteam/results.example.jsonl
       - name: Runner dry run

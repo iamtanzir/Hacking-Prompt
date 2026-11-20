@@ -169,5 +169,6 @@ redteam/
 ├── score.mjs               scorer: replies -> verdicts and pass rates
 ├── judge.mjs               LLM-as-judge pass with marker agreement rate
 ├── report.mjs              Markdown report across one or more results files
+├── test/                   unit tests for the verdict logic (node --test)
 └── results.example.jsonl   sample replies for a no-key smoke test
 ```
