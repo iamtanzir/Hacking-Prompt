@@ -21,6 +21,8 @@ pass or fail.
 | `rubric.md` | 0–3 scoring scale, severity levels, category definitions, special dimensions |
 | `classify.mjs` | Shared verdict logic, so scorer, judge and report cannot drift apart |
 | `validate.mjs` | Schema and semantic checks on `cases.jsonl`; CI gate |
+| `RUNNING.md` | One-command guide: provider table with the exact key variable, output files, troubleshooting |
+| `eval.sh` | Wrapper: takes `--provider`, `--model`, `--out`, then runs, scores, reports and optionally judges |
 | `run.mjs` | Runner: sends each case (including multi-turn) to any OpenAI-compatible `/chat/completions` endpoint |
 | `score.mjs` | Dependency-free scorer: verdicts, per-category pass rates, blocker list |
 | `judge.mjs` | LLM-as-judge pass, reporting agreement with the marker classifier |
@@ -67,7 +69,16 @@ node redteam/judge.mjs results.jsonl --model gpt-4o-mini      # second opinion +
 node redteam/report.mjs results.jsonl --out report.md         # shareable Markdown
 ```
 
-To collect real replies, point the runner at an endpoint:
+To collect real replies, the wrapper picks the endpoint and key variable for you:
+
+```bash
+OPENAI_API_KEY=... ./redteam/eval.sh --provider openai --model gpt-4o-mini --out results/gpt.jsonl
+```
+
+`--judge` adds the judge pass; `--dry-run` previews without a key; `--limit` and `--only`
+narrow the run. Provider table and troubleshooting: [RUNNING.md](RUNNING.md).
+
+Or drive `run.mjs` directly:
 
 ```bash
 OPENAI_BASE_URL=https://api.openai.com/v1 OPENAI_API_KEY=... \

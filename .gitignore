@@ -1,6 +1,7 @@
-# Model output — regenerate with redteam/run.mjs
+# Model output — regenerate with redteam/run.mjs or redteam/eval.sh
 results.jsonl
 *.results.jsonl
+results/
 
 # Local environment
 .env

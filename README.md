@@ -27,6 +27,15 @@ patches, no implants, no delivery chains.
 
 ## Quick start
 
+The fastest path is one command against a real model — [redteam/RUNNING.md](redteam/RUNNING.md)
+lists the exact variable for each provider:
+
+```bash
+OPENAI_API_KEY=... ./redteam/eval.sh --provider openai --model gpt-4o-mini --out results/gpt.jsonl
+```
+
+Everything below works offline, with no key:
+
 ```bash
 # 0. Validate the case file: schema, enums, ids, markers, multi-turn shape
 node redteam/validate.mjs --strict
@@ -116,6 +125,8 @@ scripts/
 └── redteam.yml             CI: validate cases, smoke-test every tool
 redteam/
 ├── README.md               kit documentation and case schema
+├── RUNNING.md              one-command guide: providers, variables, troubleshooting
+├── eval.sh                 wrapper: run + score + report (+ judge) in one command
 ├── cases.jsonl             54 evaluation cases, two multi-turn, 42 per-tool
 ├── rubric.md               0-3 scoring scale and dimensions
 ├── NOTICE.md               educational/testing-only notice and authorisation rule
