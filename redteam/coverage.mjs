@@ -13,9 +13,11 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { checkCoverage } from './coverage-lib.mjs';
 
+/** @type {string} */
 const here = path.dirname(fileURLToPath(import.meta.url));
 
 const tools = JSON.parse(fs.readFileSync(path.join(here, 'tools.json'), 'utf8'));
+
 const cases = fs
   .readFileSync(path.join(here, 'cases.jsonl'), 'utf8')
   .split('\n')

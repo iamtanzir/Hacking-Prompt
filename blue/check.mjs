@@ -13,9 +13,12 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { checkControls } from './controls-lib.mjs';
 
+/** @type {string} */
 const here = path.dirname(fileURLToPath(import.meta.url));
+/** @type {string} */
 const root = path.join(here, '..');
 
+/** @type {{name: string, case: string, status?: string, licenceGated?: boolean, aliases?: string[]}[]} */
 const tools = JSON.parse(fs.readFileSync(path.join(root, 'redteam', 'tools.json'), 'utf8'));
 const controls = JSON.parse(fs.readFileSync(path.join(here, 'controls.json'), 'utf8'));
 
