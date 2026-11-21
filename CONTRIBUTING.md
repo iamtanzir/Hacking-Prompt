@@ -19,20 +19,28 @@ Thanks for trying to improve the corpus. The bar is accuracy, not volume.
 ## Local checks
 
 ```bash
-npm ci          # installs TypeScript and @types/node (dev-only)
-./scripts/check.sh
-```
+npm ci
 
-That runs the schema gate, the coverage gate, the blue-team gate, the JSDoc typecheck, the
-unit tests, the scorer on the bundled samples, the dry runs and the report render. CI runs
-the same steps, so a green local run should mean a green PR.
+# The full local mirror of CI (schema + coverage + blue + teams + JSDoc + tests + scorer + dry runs + report):
+./scripts/check.sh
+
+# Fast loop when you only touched a comment or a typedef (runs both configs):
+npm run typecheck
+
+**Tip:** `package.json` has a `test:coverage` script — use it when you touch scoring logic.
+
+That runs the schema gate, the coverage gate, the blue-team gate, the JSDoc typecheck, the JSDoc
+strict typecheck, the unit tests, the scorer on the bundled samples, the dry runs and the report
+render. CI runs the same steps, so a green local run should mean a green PR.
 
 `npm run typecheck` alone is the fast loop when you only touched a comment or a typedef.
 Two configs run: `tsconfig.json` covers every `.mjs` with `checkJs`, and
 `tsconfig.strict.json` enforces `strict` on the modules listed in its `include` array.
-`redteam/classify.mjs`, `redteam/validate-cases.mjs`, `redteam/coverage-lib.mjs` and
-`blue/controls-lib.mjs` are strict today; to move a module up, make it strict-clean and add
-it to that list in the same PR. Do not lower `strict` to get a file through.
+`redteam/classify.mjs`, `redteam/validate-cases.mjs`, `redteam/coverage-lib.mjs`,
+`blue/controls-lib.mjs`, `redteam/validate.mjs`, `redteam/coverage.mjs`,
+`blue/check.mjs` and `teams/check.mjs` are strict today; to move a module up, make it strict-clean and add
+it to that list in the same PR. Do not lower `strict` to get a file through. The same rule
+governs the gate lines in `package.json`: do not downgrade a script for convenience.
 
 If you change `classify.mjs`, `validate-cases.mjs`, `coverage-lib.mjs` or `blue/controls-lib.mjs`,
 change the matching test in the same commit. A verdict rule without a test is a guess that

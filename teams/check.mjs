@@ -17,11 +17,22 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
+/** @type {string} */
 const here = path.dirname(fileURLToPath(import.meta.url));
+/** @type {string} */
 const root = path.join(here, '..');
 
 /**
- * @typedef {{team: string, purpose: string}} Pack
+ * @typedef {Object} Pack
+ * @property {string} team
+ * @property {string} purpose
+ * @property {Object} [authorization]
+ * @property {string[]} [authorization.required]
+ * @property {string[]} [stop_conditions]
+ * @property {Object} [scoring]
+ * @property {string} [scoring.rubric]
+ * @property {Array<{signal?: string, category?: string, expected?: string}>} [decisions]
+ * @property {{phase: string, techniques: string[], case_categories?: string[]}[]} [phases]
  * @typedef {Object} Context
  * @property {Set<string>} categories categories used by the case file
  * @property {Set<string>} expected expected verdicts used by the case file
@@ -120,14 +131,14 @@ export function checkTeamTools(team, entries, tools, context) {
 }
 
 /**
- * @param {{white: any, gray: any, black: any}} packs
+ * @param {{white?: Pack, gray?: Pack, black?: Pack}} packs
  * @param {Context} context
  * @returns {{errors: string[], stats: {teams: number, decisions: number, phases: number, stopConditions: number}}}
  */
 export function checkTeams(packs, context) {
   /** @type {string[]} */
   const errors = [];
-  const fail = (/** @type {string} */ message) => errors.push(message);
+    const fail = (message) => errors.push(message);
 
   for (const [key, pack] of Object.entries(packs)) {
     if (!pack || typeof pack !== 'object') {
@@ -138,7 +149,7 @@ export function checkTeams(packs, context) {
     if (typeof pack.purpose !== 'string' || !pack.purpose.trim()) fail(`${key}: "purpose" is required`);
   }
 
-  const white = packs.white || {};
+  const white = packs.white || { team: 'white', purpose: '' };
   const required = white.authorization?.required;
   if (!Array.isArray(required) || required.length === 0) {
     fail('white: authorization.required must list at least one precondition');
@@ -157,16 +168,19 @@ export function checkTeams(packs, context) {
   if (!Array.isArray(decisions) || decisions.length === 0) {
     fail('gray: decisions must not be empty');
   } else {
-    decisions.forEach((/** @type {any} */ decision, /** @type {number} */ index) => {
+    decisions.forEach((decision /* : {signal?: string, category?: string, expected?: string} */ , index) => {
       const where = `gray decisions[${index}]`;
-      if (typeof decision?.signal !== 'string' || !decision.signal.trim()) {
+      const signal = decision?.signal;
+      if (typeof signal !== 'string' || !signal.trim()) {
         fail(`${where}: "signal" is required`);
       }
-      if (!context.categories.has(decision?.category)) {
-        fail(`${where}: category "${decision?.category}" is not used by cases.jsonl`);
+      const category = decision?.category ?? undefined;
+      if (typeof category === 'string' && !context.categories.has(category)) {
+        fail(`${where}: category "${category}" is not used by cases.jsonl`);
       }
-      if (!context.expected.has(decision?.expected)) {
-        fail(`${where}: expected "${decision?.expected}" is not used by cases.jsonl`);
+      const expected = decision?.expected ?? undefined;
+      if (typeof expected === 'string' && !context.expected.has(expected)) {
+        fail(`${where}: expected "${expected}" is not used by cases.jsonl`);
       }
     });
   }
@@ -177,7 +191,7 @@ export function checkTeams(packs, context) {
   } else {
     /** @type {Set<string>} */
     const seen = new Set();
-    phases.forEach((/** @type {any} */ phase, /** @type {number} */ index) => {
+    phases.forEach((phase, index) => {
       const name = phase?.phase;
       if (typeof name !== 'string' || !name.trim()) {
         fail(`black phases[${index}]: "phase" is required`);
@@ -220,7 +234,11 @@ export function checkTeams(packs, context) {
 }
 
 if (process.argv[1] && fileURLToPath(import.meta.url) === path.resolve(process.argv[1])) {
-  const read = (/** @type {string} */ relative) =>
+  /**
+   * @param {string} relative
+   * @returns {any}
+   */
+  const read = (relative) =>
     JSON.parse(fs.readFileSync(path.join(root, relative), 'utf8'));
   const cases = fs
     .readFileSync(path.join(root, 'redteam', 'cases.jsonl'), 'utf8')

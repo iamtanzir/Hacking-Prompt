@@ -7,6 +7,13 @@
     "redteam/classify.mjs",
     "redteam/validate-cases.mjs",
     "redteam/coverage-lib.mjs",
-    "blue/controls-lib.mjs"
+    "blue/controls-lib.mjs",
+    "redteam/validate-cases.mjs",
+    "redteam/coverage-lib.mjs",
+    "blue/controls-lib.mjs",
+    "redteam/validate.mjs",
+    "redteam/coverage.mjs",
+    "blue/check.mjs",
+    "teams/check.mjs"
   ]
 }

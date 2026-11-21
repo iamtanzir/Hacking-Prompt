@@ -13,7 +13,9 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { validateCases } from './validate-cases.mjs';
 
+/** @type {string} */
 const here = path.dirname(fileURLToPath(import.meta.url));
+/** @type {boolean} */
 const strict = process.argv.includes('--strict');
 
 const raw = fs
@@ -22,13 +24,14 @@ const raw = fs
   .map((line, index) => ({ line, number: index + 1 }))
   .filter((entry) => entry.line.trim() && !entry.line.trim().startsWith('//'));
 
-const cases = [];
+/** @type {string[]} */
 const parseErrors = [];
+const cases = [];
 for (const entry of raw) {
   try {
     cases.push({ ...JSON.parse(entry.line), __line: entry.number });
   } catch (err) {
-    parseErrors.push(`line ${entry.number}: invalid JSON — ${err.message}`);
+    parseErrors.push(`line ${entry.number}: invalid JSON — ${/** @type {Error} */ (err).message}`);
   }
 }
 
